@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import AppButton from "./components/AppButton"
 
-function loginScreen() {
+function LoginScreen() {
   return (
     <View style={styles.mainContainer}>
       
@@ -37,7 +37,7 @@ function loginScreen() {
   );
 }
 
-function signupScreen (){
+function SignupScreen (){
 
   return(
     <View style={styles.mainContainer}>
@@ -76,8 +76,8 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen options={{headerShown:false}} name="loginScreen" component={loginScreen} />
-        <Stack.Screen options={{headerShown:false}} name="signupScreen" component={signupScreen} />
+        <Stack.Screen options={{headerShown:false}} name="LoginScreen" component={LoginScreen} />
+        <Stack.Screen options={{headerShown:false}} name="SignupScreen" component={SignupScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

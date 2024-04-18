@@ -13,7 +13,7 @@ export default function AppButton({title='string', type='string'}) {
   return (
     <TouchableOpacity 
     style={ type=='b'? styles.button2: styles.button } 
-    onPress={ title=='Sign up'? ()=>navigation.navigate('signupScreen'): null}>
+    onPress={ title=='Sign up'? ()=>navigation.navigate('SignupScreen'): null}>
 
       
       <Text style={ type=='b'? styles.text2: styles.text }>{title}</Text>
