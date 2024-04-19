@@ -19,7 +19,6 @@ function App() {
         <Stack.Screen options={{headerShown:false}} name="LoginScreen" component={LoginScreen} />
         <Stack.Screen options={{headerShown:false}} name="SignupScreen" component={SignupScreen} />
         <Stack.Screen options={{headerShown:false}} name="Main" component={Main} />
-
       </Stack.Navigator>
     </NavigationContainer>
   );

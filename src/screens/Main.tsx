@@ -2,77 +2,30 @@
 
 import * as React from 'react';
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import { ProfileScreen } from '../../src/screens/ProfileScreen';
+import { SettingsScreen } from '../../src/screens/SettingsScreen';
+import { CoursesScreen } from '../../src/screens/CoursesScreen';
 
 const Tab = createBottomTabNavigator();
 
-function ProfileScreen() {
+
+
+
+  // function CoursesScreen() {
     
-    return (
-
-      
-
-  <View style={styles.mainContainer}>
-      <View style={styles.mainTextContainer}>
-        <Text style={styles.title}>Profile</Text>
-      </View>
-
-      <View style={styles.imageContainer}>
-        <Image style={styles.profileImage} 
-         source={require('../../assets/Images/ProfileImage.png')}
-            />
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.primaryText}> Your Courses </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.primaryText}> Saved </Text>
-              </TouchableOpacity>
-              <Text style={styles.secondaryText}>Log out</Text>
-
-            </View>
-
-        </View>
-
-  </View>
-    
-
+  //   return (
   
-
-     
-    
-    );
-  }
-
-function SettingsScreen() {
-    
-    return (
-  
-     <SafeAreaView>
+  //    <SafeAreaView>
     
 
-      <Text> Settings Screen </Text>
+  //     <Text> Courses Screen </Text>
       
-     </SafeAreaView>
+  //    </SafeAreaView>
     
-    );
-  }
-
-  function CoursesScreen() {
-    
-    return (
-  
-     <SafeAreaView>
-    
-
-      <Text> Courses Screen </Text>
-      
-     </SafeAreaView>
-    
-    );
-  }
+  //   );
+  // }
 
 
 export function Main() {
@@ -98,30 +51,29 @@ const styles = StyleSheet.create({
     flex: 1, 
     alignItems: 'center', 
     justifyContent: 'center', 
+    width:'100%',
   },
 
   profileImage:{
-    width: 300,
-    height: 300,
+    width: 200,
+    height: 200,
   },
- 
-  primaryText:{
-    fontWeight: 'bold',
-    fontSize: 20,
-    color: '#3b3a36',
+
+  imageContainer:{
     position:'absolute',
-    top:0,
-    marginBottom: 10
+    top: 130,
+
 
   },
+ 
   title:{
     fontWeight: 'bold',
     fontSize: 30,
     color: '#3b3a36',
     position:'absolute',
-    top:0,
+    top:40,
     marginBottom: 10
-
+    
   },
   mainTextContainer:{
     alignItems: 'center', 
@@ -130,54 +82,32 @@ const styles = StyleSheet.create({
     
     top: 45
   },
-  imageContainer:{
-    position:'absolute',
-    top: 70,
-    margin: 10,
-    
+  primaryText:{
+    fontWeight: 'bold',
+    fontSize: 25,
+    color: '#3b3a36',
   },
-  input:{
-    borderColor: 'black',
-    borderWidth: 1,
-    width: '100%',
-    height: 45,
-    borderRadius: 8,
-    margin: 10,
-    padding: 10
-  },
-  inputContainerLogin:{
-    marginTop: 230,
-    alignItems:'center',
-    width:'90%',
-    marginBottom: 10
-  },
- 
+
   secondaryText:{
     color: 'gray',
     fontWeight:'bold'
   },
-  buttonsContainerLogin:{
-    width:'90%',
-    marginTop:20,
-    alignItems:'center'
-  },
+
   button:{
-    borderRadius: 8,
+    borderRadius: 15,
     borderColor: 'gray',
     borderWidth:1,
-  
     alignItems:'center',
- 
-    textAlign:'center',
-    width: '100%',
+    justifyContent:'center',
     margin: 10,
-   height: 100,
+    height: 80,
+    width:'170%'
 },
 
 buttonContainer:{
   alignItems:'center',
-
-
+  marginTop:20
+  
 }
 
 })
