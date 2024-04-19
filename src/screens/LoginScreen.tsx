@@ -1,10 +1,12 @@
-
-
 import * as React from 'react';
-import { View, Text, Image, StyleSheet, TextInput, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import AppButton from '../shared/components/AppButton';
 
 export function LoginScreen() {
+
+const navigation = useNavigation();
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.imageContainer}>
@@ -14,7 +16,10 @@ export function LoginScreen() {
       </View>
 
       <View style={styles.inputContainerLogin}>
-        <Text style={styles.loginText} >Log in</Text>
+        <TouchableOpacity onPress={()=>navigation.navigate('Main')} >
+        <Text style={styles.primaryText} >Log in</Text>
+        </TouchableOpacity>
+
         <TextInput placeholder='Email' style={styles.input}/>
         <TextInput placeholder='Password' style={styles.input}/>
       </View>
@@ -41,12 +46,8 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
   },
-  signupImage:{
-    width: 250,
-    height: 300,
-  },
-
-  loginText:{
+ 
+  primaryText:{
     fontWeight: 'bold',
     fontSize: 20,
     color: '#3b3a36',
@@ -75,12 +76,7 @@ const styles = StyleSheet.create({
     width:'90%',
     marginBottom: 10
   },
-  inputContainerSignup:{
-    marginTop: 270,
-    alignItems:'center',
-    width:'90%',
-    marginBottom: -10
-  },
+ 
   secondaryText:{
     color: 'gray',
     fontWeight:'bold'
@@ -90,10 +86,6 @@ const styles = StyleSheet.create({
     marginTop:20,
     alignItems:'center'
   },
-  buttonsContainerSignup:{
-    width:'90%',
-    marginTop:20,
-    alignItems:'center'
-  },
+  
 
 })

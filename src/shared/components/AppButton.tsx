@@ -2,29 +2,20 @@ import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
-
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-
 export default function AppButton({title='string', type='string'}) {
   const navigation = useNavigation();
   
   return (
     <TouchableOpacity 
     style={ type=='b'? styles.button2: styles.button } 
-    onPress={ title=='Sign up'? ()=>navigation.navigate('SignupScreen'): null}>
+    onPress={ title=='Sign up'? ()=>navigation.navigate('SignupScreen'): ()=>navigation.navigate('LoginScreen')}>
 
       
       <Text style={ type=='b'? styles.text2: styles.text }>{title}</Text>
        
     </TouchableOpacity>
   
-  )
-
-
-
-}
+  )}
 
 const styles = StyleSheet.create({
 
