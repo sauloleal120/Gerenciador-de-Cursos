@@ -9,6 +9,7 @@ import { SettingsScreen } from '../../src/screens/SettingsScreen';
 import { CoursesScreen } from '../../src/screens/CoursesScreen';
 
 import Feather from 'react-native-vector-icons/Feather';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -26,10 +27,12 @@ export function Main() {
    
     <Tab.Navigator>
       <Tab.Screen 
+      
       options={{
         headerShown:false,
+        
         tabBarIcon: ({color, size}) => {
-          return <Feather name="book" color={color} size={size}/>
+          return <Feather name="book" color={'#e3562a'} size={size}/>
         }
       }} 
       name="Courses" 
@@ -40,7 +43,7 @@ export function Main() {
        options={{
         headerShown:false,
         tabBarIcon: ({color, size}) => {
-          return <Feather name="user" color={color} size={size}/>
+          return <Feather name="user" color={'#e3562a'} size={size}/>
         }
       }} 
       name="Profile" 
@@ -51,7 +54,7 @@ export function Main() {
        options={{
         headerShown:false,
         tabBarIcon: ({color, size}) => {
-          return <Feather name="settings" color={color} size={size}/>
+          return <Feather name="settings" color={'#e3562a'} size={size}/>
         }
       }} 
       name="Settings" 

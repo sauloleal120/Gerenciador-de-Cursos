@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Switch,  } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { ScreenStack } from 'react-native-screens';
+import { View, Text, Image, StyleSheet, Switch, FlatList, TouchableOpacity  } from 'react-native';
+
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -9,11 +8,17 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 export function SettingsScreen() {
-    const navigation = useNavigation();
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+    const [lista, setLista] = useState ([
+        {key:1, nome:'saulo', sobrenome:'leal', idade: 32, },
+        {key:2, nome:'yasmim', sobrenome:'soares', idade: 35, },
+        {key:3, nome:'joão', sobrenome:'ramos', idade: 10, },
+        {key:4, nome:'maria luiza', sobrenome:'ramos', idade: 8, },
+    
+    ])
 
     return (
 
@@ -44,14 +49,16 @@ export function SettingsScreen() {
             <Text style={styles.secondaryText}> Account information </Text>
 
             </View>
+<View>
 
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.primaryText}> Saved </Text>
-            </TouchableOpacity>
+         <FlatList
+         
+         data={lista}
+         renderItem={({ item })=> (  <InformationList data={item} />  )}
 
-            <TouchableOpacity>
-              <Text style={styles.secondaryText}>Log out</Text>
-            </TouchableOpacity>
+         />
+           
+</View>
 
 
           </View>
@@ -61,12 +68,24 @@ export function SettingsScreen() {
   </View>
     
 
-  
+    );}
 
-     
-    
-    );
-  }
+
+
+    function InformationList ({data}){
+
+        return(
+            <View style={styles.mainContainer}>
+
+            <TouchableOpacity style={styles.buttonContainer}>
+                <Text style={styles.primaryText}> {data.nome} </Text>
+
+           
+            </TouchableOpacity>
+
+            </View>
+        )
+    }
 
   const styles = StyleSheet.create({
 
