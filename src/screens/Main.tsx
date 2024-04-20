@@ -1,31 +1,22 @@
 
 
 import * as React from 'react';
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { ProfileScreen } from '../../src/screens/ProfileScreen';
 import { SettingsScreen } from '../../src/screens/SettingsScreen';
 import { CoursesScreen } from '../../src/screens/CoursesScreen';
 
+import Feather from 'react-native-vector-icons/Feather';
+
+
 const Tab = createBottomTabNavigator();
 
 
 
 
-  // function CoursesScreen() {
-    
-  //   return (
   
-  //    <SafeAreaView>
-    
-
-  //     <Text> Courses Screen </Text>
-      
-  //    </SafeAreaView>
-    
-  //   );
-  // }
 
 
 export function Main() {
@@ -34,9 +25,38 @@ export function Main() {
 
    
     <Tab.Navigator>
-      <Tab.Screen options={{headerShown:false}} name="Courses" component={CoursesScreen} />
-      <Tab.Screen options={{headerShown:false}} name="Profile" component={ProfileScreen} />
-      <Tab.Screen options={{headerShown:false}} name="Settings" component={SettingsScreen} />
+      <Tab.Screen 
+      options={{
+        headerShown:false,
+        tabBarIcon: ({color, size}) => {
+          return <Feather name="book" color={color} size={size}/>
+        }
+      }} 
+      name="Courses" 
+      component={CoursesScreen} 
+      />
+
+      <Tab.Screen 
+       options={{
+        headerShown:false,
+        tabBarIcon: ({color, size}) => {
+          return <Feather name="user" color={color} size={size}/>
+        }
+      }} 
+      name="Profile" 
+      component={ProfileScreen} 
+      />
+
+      <Tab.Screen 
+       options={{
+        headerShown:false,
+        tabBarIcon: ({color, size}) => {
+          return <Feather name="settings" color={color} size={size}/>
+        }
+      }} 
+      name="Settings" 
+      component={SettingsScreen} 
+      />
       
 
     </Tab.Navigator>
