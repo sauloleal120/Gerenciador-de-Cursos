@@ -17,6 +17,10 @@ export function SettingsScreen() {
         {key:2, nome:'yasmim', sobrenome:'soares', idade: 35, },
         {key:3, nome:'joão', sobrenome:'ramos', idade: 10, },
         {key:4, nome:'maria luiza', sobrenome:'ramos', idade: 8, },
+        {key:5, nome:'harry', sobrenome:'styles', idade: 1, },
+        {key:6, nome:'miley', sobrenome:'cyrus', idade: 1, },
+
+
     
     ])
 
@@ -46,10 +50,10 @@ export function SettingsScreen() {
                />
             </View>
             <View style={styles.secondaryTextContainer}>
-            <Text style={styles.secondaryText}> Account information </Text>
+            <Text style={styles.secondaryText}> Account informationn </Text>
 
             </View>
-<View>
+<View style={styles.flatlistContainer}>
 
          <FlatList
          
@@ -75,9 +79,9 @@ export function SettingsScreen() {
     function InformationList ({data}){
 
         return(
-            <View style={styles.mainContainer}>
+            <View style={styles.buttonContainer}>
 
-            <TouchableOpacity style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button}>
                 <Text style={styles.primaryText}> {data.nome} </Text>
 
            
@@ -95,7 +99,13 @@ export function SettingsScreen() {
       justifyContent: 'center', 
       width:'100%',
     },
-  
+    
+    flatlistContainer:{
+       
+        width: '100%'
+
+    },
+
     profileImage:{
       width: 200,
       height: 200,
