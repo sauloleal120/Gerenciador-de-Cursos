@@ -1,34 +1,44 @@
-import * as React from 'react';
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, TextComponent } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { ScreenStack } from 'react-native-screens';
+import React, {useState} from 'react';
+import { View, Text, Image, StyleSheet, Switch, FlatList, TouchableOpacity, SafeAreaView  } from 'react-native';
+
+
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+
 
 
 export function CoursesScreen() {
-    const navigation = useNavigation();
+
+   
+
+  
 
     return (
-  
-     <View style={styles.textContainer}>
-    
 
-      <Text style={styles.text}> Courses Screen </Text>
       
-     </View>
-    
-    );
-  }
+<View style={styles.mainContainer}>
+    <Text> Courses Screen</Text>
+</View>
+  
 
-const styles = StyleSheet.create({
+    );}
 
-    textContainer:{
+
+
+
+
+  const styles = StyleSheet.create({
+
+    mainContainer:{ 
+      flex: 1, 
+      alignItems: 'center', 
+      justifyContent:'center'
        
-        alignItems:'center',
-        
+  
     },
-    text:{
-        position:'absolute',
-        top: 250,
-    }
+    
+    
 
-})
+
+  
+  })

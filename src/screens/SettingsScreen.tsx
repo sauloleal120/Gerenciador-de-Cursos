@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet, Switch, FlatList, TouchableOpacity  } from 'react-native';
+import { View, Text, Image, StyleSheet, Switch, FlatList, TouchableOpacity, SafeAreaView  } from 'react-native';
 
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -12,17 +12,7 @@ export function SettingsScreen() {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-    const [lista, setLista] = useState ([
-        {key:1, nome:'saulo', sobrenome:'leal', idade: 32, },
-        {key:2, nome:'yasmim', sobrenome:'soares', idade: 35, },
-        {key:3, nome:'joão', sobrenome:'ramos', idade: 10, },
-        {key:4, nome:'maria luiza', sobrenome:'ramos', idade: 8, },
-        {key:5, nome:'harry', sobrenome:'styles', idade: 1, },
-        {key:6, nome:'miley', sobrenome:'cyrus', idade: 1, },
-
-
-    
-    ])
+  
 
     return (
 
@@ -49,24 +39,32 @@ export function SettingsScreen() {
                 value={isEnabled}
                />
             </View>
+
             <View style={styles.secondaryTextContainer}>
-            <Text style={styles.secondaryText}> Account informationn </Text>
-
+            <Text style={styles.secondaryText}> Account information </Text>
             </View>
-<View style={styles.flatlistContainer}>
+       
 
-         <FlatList
-         
-         data={lista}
-         renderItem={({ item })=> (  <InformationList data={item} />  )}
+                <View style={styles.button}>
+                    <MaterialCommunityIcons name="account-circle" size={30} color="dodgerblue" />
+                    <Text style={styles.primaryText}> Name </Text>
+               </View>
 
-         />
-           
-</View>
+               <View style={styles.button}>
+                    <MaterialCommunityIcons name="email" size={30} color="dodgerblue" />
+                    <Text style={styles.primaryText}> Email </Text>
+               </View>
+
+               <View style={styles.button}>
+                    <MaterialCommunityIcons name="account-key" size={30} color="dodgerblue" />
+                    <Text style={styles.primaryText}> Password </Text>
+               </View>
+
+
 
 
           </View>
-
+           
       </View>
 
   </View>
@@ -76,28 +74,15 @@ export function SettingsScreen() {
 
 
 
-    function InformationList ({data}){
 
-        return(
-            <View style={styles.buttonContainer}>
-
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.primaryText}> {data.nome} </Text>
-
-           
-            </TouchableOpacity>
-
-            </View>
-        )
-    }
 
   const styles = StyleSheet.create({
 
     mainContainer:{ 
       flex: 1, 
       alignItems: 'center', 
-      justifyContent: 'center', 
-      width:'100%',
+       
+  
     },
     
     flatlistContainer:{
@@ -113,7 +98,7 @@ export function SettingsScreen() {
   
     imageContainer:{
       position:'absolute',
-      top: 130,
+      top: 90,
   
   
     },
@@ -151,7 +136,7 @@ export function SettingsScreen() {
     secondaryTextContainer:{
         position:'relative',
         right: 80,
-        margin: 10
+        margin: 5
     },
   
     button:{
@@ -170,12 +155,14 @@ export function SettingsScreen() {
   buttonContainer:{
     alignItems:'center',
     textAlign:'left',
-    marginTop: 20,
+    
     
   },
   switch:{
     position:'absolute',
     left: 270 
-  }
+  },
+
+
   
   })
