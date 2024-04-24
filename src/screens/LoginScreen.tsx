@@ -102,39 +102,6 @@ const onSubmit = (data: FormData) => checkLogin(data?.email, data?.password)
   );
 }
 
-export function SignupScreen2() {
-
-  return(
-    <View style={styles.mainContainer}>
-      
-      <View style={styles.imageContainer}>
-        <Image style={styles.signupImage} 
-       source={require('../../assets/Images/SignupImage.png')}
-      />
-
-      </View>
-     
-
-      <View style={styles.inputContainerSignup}>
-        <Text style={styles.primaryText} >Sign up</Text>
-        <Text style={styles.secondaryText}>Create your account</Text>
-        <TextInput placeholder='Name' style={styles.input}/>
-        <TextInput placeholder='Email' style={styles.input}/>
-        <TextInput placeholder='Password' style={styles.input}/>
-      </View>
-
-     
-      <View style={styles.buttonsContainerSignup}>
-        <AppButton title='Sign up' type='a'/>
-        <AppButton title='Log in' type='b'/>
-      </View>
-    
-      
-
-    </View>
-  );
-}
-
 
 
 
@@ -193,19 +160,5 @@ const styles = StyleSheet.create({
 
 
 
-  signupImage:{
-    width: 250,
-    height: 300,
-  },
-  inputContainerSignup:{
-    marginTop: 270,
-    alignItems:'center',
-    width:'90%',
-    marginBottom: -10
-  },
-  buttonsContainerSignup:{
-    width:'90%',
-    marginTop:20,
-    alignItems:'center'
-  },
+
 })
