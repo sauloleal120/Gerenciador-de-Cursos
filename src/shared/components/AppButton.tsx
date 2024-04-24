@@ -2,13 +2,13 @@ import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
-export default function AppButton({title='string', type='string'}) {
+export default function AppButton({title='string', type='string', onPress}) {
   const navigation = useNavigation();
   
   return (
     <TouchableOpacity 
     style={ type=='b'? styles.button2: styles.button } 
-    onPress={ title=='Sign up'? ()=>navigation.navigate('SignupScreen'): ()=>navigation.navigate('LoginScreen')}>
+    onPress={ title=='Sign up'? ()=>navigation.navigate('SignupScreen'): ()=>onPress()}>
 
       
       <Text style={ type=='b'? styles.text2: styles.text }>{title}</Text>

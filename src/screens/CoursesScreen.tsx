@@ -1,13 +1,24 @@
 import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet, TextInput, FlatList  } from 'react-native';
-
-
+import { View, Text, Image, StyleSheet, TextInput, FlatList, TouchableOpacity  } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import {useForm, Controller} from 'react-hook-form';
 
+
+type FormData = {
+
+    searchCourse: string
+}
+
+     
 
 
 export function CoursesScreen() {
+
+    const {control, handleSubmit} = useForm<FormData>()
+
+    const onSubmit = (data: FormData) => console.log(data.searchCourse) 
+  
 
     const [categories, setCategories] = useState([
 
@@ -37,13 +48,27 @@ export function CoursesScreen() {
               <Text style={styles.greeting}> Hello, </Text>
 
               <View style={styles.nameContainer}>
+               <TouchableOpacity onPress={handleSubmit(onSubmit)} >
                  <Text style={styles.name}> Saulo Leal </Text>
+               </TouchableOpacity>
                  <MaterialCommunityIcons style={styles.bell} name="bell-ring-outline" size={40} color="black" />
               </View>
 
              <View style={styles.inputContainer}>
+             
+            <Controller
+                control={control}
+                name={'searchCourse'}
+                render={({ field: {value, onChange} }) =>(
+                    <TextInput 
+                    placeholder='Search course' 
+                    style={styles.input} 
+                    value={value} 
+                    onChangeText={onChange} />
 
-                <TextInput placeholder='Search course' style={styles.input} />
+                )}
+            />
+               
                 <AntDesign name="search1" size={30} color="black" style={styles.lupa} />
 
              </View>

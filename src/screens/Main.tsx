@@ -9,7 +9,6 @@ import { SettingsScreen } from '../../src/screens/SettingsScreen';
 import { CoursesScreen } from '../../src/screens/CoursesScreen';
 
 import Feather from 'react-native-vector-icons/Feather';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -134,3 +133,5 @@ buttonContainer:{
 }
 
 })
+
+

@@ -1,11 +1,43 @@
-import * as React from 'react';
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AppButton from '../shared/components/AppButton';
+import {useForm, Controller } from 'react-hook-form'
+
+
+type FormData = {
+
+  email: string,
+  password: string
+
+}
 
 export function LoginScreen() {
 
+   const [users, setUsers] = useState([
+
+     {key:1, name:'admin', password:'admin'},
+    
+     ])
+
+   
+
+
+    const checkLogin = (user, password)=>{
+
+      const newUsers = users.filter( (users)=> users.name === user )
+      if (newUsers[0].password == password) navigation.navigate('Main')
+    }
+
 const navigation = useNavigation();
+
+const {control, handleSubmit, formState: {errors} } = useForm<FormData>()
+
+//useEffect(()=> alert( errors?.email?.message ), [ errors?.email ])
+//useEffect(()=> alert( errors?.password?.message ), [ errors?.password ])
+
+const onSubmit = (data: FormData) => checkLogin(data?.email, data?.password) 
+
 
   return (
     <View style={styles.mainContainer}>
@@ -20,19 +52,91 @@ const navigation = useNavigation();
         <Text style={styles.primaryText} >Log in</Text>
         </TouchableOpacity>
 
-        <TextInput placeholder='Email' style={styles.input}/>
-        <TextInput placeholder='Password' style={styles.input}/>
+        <Controller
+                control={control}
+                name={'email'}
+                rules={{
+                  required: 'e-mail obrigatório'
+                }}
+                render={({ field: {value, onChange} }) =>(
+                  <TextInput 
+                    placeholder='Email' 
+                    style={styles.input} 
+                    value={value} 
+                    onChangeText={onChange}
+                    autoCapitalize='none'
+                     />
+
+                )}
+        />
+
+        <Controller
+                control={control}
+                name={'password'}
+                rules={{
+                  required: 'senha obrigatória'
+                }}
+                render={({ field: {value, onChange} }) =>(
+                  <TextInput 
+                    placeholder='Password' 
+                    style={styles.input} 
+                    value={value} 
+                    onChangeText={onChange}
+                    autoCapitalize='none' 
+                   // secureTextEntry
+                    />
+                    
+                )}
+        />
+
+
       </View>
 
         <Text style={styles.secondaryText}>Forgot Password?</Text>
      
       <View style={styles.buttonsContainerLogin}>
-        <AppButton title='Log in' type='a'/>
-        <AppButton title='Sign up' type='b'/>
+        <AppButton onPress={handleSubmit(onSubmit)} title='Log in' type='a'/>
+        <AppButton onPress={handleSubmit(onSubmit)} title='Sign up' type='b'/>
       </View>
     </View>
   );
 }
+
+export function SignupScreen2() {
+
+  return(
+    <View style={styles.mainContainer}>
+      
+      <View style={styles.imageContainer}>
+        <Image style={styles.signupImage} 
+       source={require('../../assets/Images/SignupImage.png')}
+      />
+
+      </View>
+     
+
+      <View style={styles.inputContainerSignup}>
+        <Text style={styles.primaryText} >Sign up</Text>
+        <Text style={styles.secondaryText}>Create your account</Text>
+        <TextInput placeholder='Name' style={styles.input}/>
+        <TextInput placeholder='Email' style={styles.input}/>
+        <TextInput placeholder='Password' style={styles.input}/>
+      </View>
+
+     
+      <View style={styles.buttonsContainerSignup}>
+        <AppButton title='Sign up' type='a'/>
+        <AppButton title='Log in' type='b'/>
+      </View>
+    
+      
+
+    </View>
+  );
+}
+
+
+
 
 const styles = StyleSheet.create({
 
@@ -86,6 +190,22 @@ const styles = StyleSheet.create({
     marginTop:20,
     alignItems:'center'
   },
-  
 
+
+
+  signupImage:{
+    width: 250,
+    height: 300,
+  },
+  inputContainerSignup:{
+    marginTop: 270,
+    alignItems:'center',
+    width:'90%',
+    marginBottom: -10
+  },
+  buttonsContainerSignup:{
+    width:'90%',
+    marginTop:20,
+    alignItems:'center'
+  },
 })
