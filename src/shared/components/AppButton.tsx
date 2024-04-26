@@ -1,16 +1,24 @@
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 
 export default function AppButton({title='string', type='string', onPress}) {
+
   const navigation = useNavigation();
+      
+  const [users, setUsers] = useState([
+       
+        {key:1, name:'admin', password:'admin'},
+  
+        ])
   
   return (
-    <TouchableOpacity 
-    style={ type=='b'? styles.button2: styles.button } 
-    onPress={ title=='Sign up'? ()=>navigation.navigate('SignupScreen'): ()=>onPress()}>
 
-      
+    <TouchableOpacity 
+
+      style={ type=='b'? styles.button2: styles.button } 
+      onPress={ title=='Sign up'? ()=>navigation.navigate('SignupScreen', {user: users.name, password: users.password}): ()=>onPress()}>
       <Text style={ type=='b'? styles.text2: styles.text }>{title}</Text>
        
     </TouchableOpacity>
