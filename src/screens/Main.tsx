@@ -15,10 +15,6 @@ const Tab = createBottomTabNavigator();
 
 
 
-
-  
-
-
 export function Main() {
     
   return (

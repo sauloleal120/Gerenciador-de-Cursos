@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import AppButton from '../shared/components/AppButton';
 import {useForm, Controller } from 'react-hook-form'
 
+import LoginScreenImage from '../../assets/Images/primeira_imagem.svg'
+
 
 type FormData = {
 
@@ -40,11 +42,14 @@ const onSubmit = (data: FormData) => checkLogin(data?.email, data?.password)
 
 
   return (
+
+
+
+
     <View style={styles.mainContainer}>
-      <View style={styles.imageContainer}>
-        <Image style={styles.loginImage} 
-            source={require('../../assets/Images/LoginImage.png')}
-        />
+
+      <View style={styles.imageContainer}> 
+          <LoginScreenImage width={350} height={350} />
       </View>
 
       <View style={styles.inputContainerLogin}>

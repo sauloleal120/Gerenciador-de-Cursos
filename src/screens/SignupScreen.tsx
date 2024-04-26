@@ -2,15 +2,17 @@ import * as React from 'react';
 import { View, Text, Image, StyleSheet, TextInput } from 'react-native';
 import AppButton from '../shared/components/AppButton';
 
+import SignupScreenImage from '../../assets/Images/SignupScreenImage.svg'
+
+
 export function SignupScreen() {
 
     return(
       <View style={styles.mainContainer}>
         
         <View style={styles.imageContainer}>
-          <Image style={styles.signupImage} 
-         source={require('../../assets/Images/SignupImage.png')}
-        />
+        <SignupScreenImage width={350} height={350} />
+
   
         </View>
        
