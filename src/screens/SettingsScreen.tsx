@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { View, Text, Image, StyleSheet, Switch } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {checkLogin} from './LoginScreen'
 
 
 

@@ -16,7 +16,7 @@
 
       const [users, setUsers] = useState([
 
-      {key:1, name:'admin', password:'admin'},
+      {key:1, name:'admin', email:'admin', password:'admin'},
 
     
       ])

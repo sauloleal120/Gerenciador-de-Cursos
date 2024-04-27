@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { View, Text, Image, StyleSheet, TextInput } from 'react-native';
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import AppButton from '../shared/components/AppButton';
 import {useForm, Controller } from 'react-hook-form'
+import { useNavigation } from '@react-navigation/native';
 
 import SignupScreenImage from '../../assets/Images/SignupScreenImage.svg'
-
 
 type FormData = {
 
@@ -15,29 +15,44 @@ type FormData = {
 }
 
 
-export function SignupScreen({route, navigation}) {
+export function SignupScreen({route}) {
+
+  const navigation = useNavigation();
+
 
   const { usuario, setUsuario } = route.params;
 
-  const checkLogin = (user)=>{
+  // const checkLogin = (user: string)=>{
 
-    const newUsers = usuario.filter( (x)=> x.name === user )
-    if (newUsers.length == 1) return true
+  //   const newUsers = usuario.filter( (x: string)=> x.name === user )
+  //   if (newUsers.length == 1) return true
 
       
-    else false
-  }
+  //   else false
+  // }
 
-  function addUser(x, y, z){
+  function addUser(name, email, password){
 
   
+    usuario.push({
+        key: usuario.length+1, 
+        name: name, 
+        email: email, 
+        password: password
+      })
 
-    //setUsuario([ {name: name, email: email, password: password}])
-   
     
-      console.log(x) 
-      console.log(y) 
-      console.log(z) 
+   
+   // console.log(usuario)
+    
+  
+    }
+
+    const clearUser = () =>{
+
+    //  setUsuario([])
+      console.log(usuario)
+
     }
 
   
@@ -63,14 +78,15 @@ export function SignupScreen({route, navigation}) {
   
         <View style={styles.inputContainerSignup}>
      
-
+          <TouchableOpacity onPress={()=>clearUser()}>
           <Text style={styles.primaryText} > Sign up </Text>
+          </TouchableOpacity>
           <Text style={styles.secondaryText}>Create your account</Text>
           <Controller
                 control={control}
                 name={'name'}
                 rules={{
-                  required: 'e-mail obrigatório'
+                  required: 'nome obrigatório'
                 }}
                 render={({ field: {value, onChange} }) =>(
                   <TextInput 
@@ -104,7 +120,7 @@ export function SignupScreen({route, navigation}) {
                 control={control}
                 name={'password'}
                 rules={{
-                  required: 'e-mail obrigatório'
+                  required: 'password obrigatório'
                 }}
                 render={({ field: {value, onChange} }) =>(
                   <TextInput 
@@ -117,12 +133,14 @@ export function SignupScreen({route, navigation}) {
 
                 )}
         />
+
+        
         </View>
   
        
         <View style={styles.buttonsContainerSignup}>
           <AppButton onPress={handleSubmit(onSubmit)} title='Sign up' type='a' />
-          <AppButton onPress={()=>console.log(usuario)} title='Log in' type='b'/>
+          <AppButton onPress={()=>navigation.navigate('LoginScreen')} title='Log in' type='b'/>
         </View>
       
         

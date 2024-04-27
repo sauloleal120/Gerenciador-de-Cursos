@@ -16,20 +16,16 @@ type FormData = {
 
 export default function LoginScreen({route}) {
 
-  //  const [users, setUsers] = useState([
+   
+  const navigation = useNavigation();
 
-  //    {key:1, name:'admin', password:'admin'},
-    
-  //    ])
-
-  const { usuario } = route.params;
+   const { usuario } = route.params;
 
 
    const checkLogin = (user, password)=>{
      
-    const navigation = useNavigation();
 
-     const newUsers = usuario.filter( (x)=> x.name === user )
+     const newUsers = usuario.filter( (x)=> x.email === user )
      if (newUsers[0].password == password) navigation.navigate('Main')
 
    }
@@ -98,12 +94,13 @@ const onSubmit = (data: FormData) => checkLogin(data?.email, data?.password)
 
 
       </View>
-
+        <TouchableOpacity onPress={()=>console.log(usuario)} >
         <Text style={styles.secondaryText}>Forgot Password?</Text>
+        </TouchableOpacity>
      
       <View style={styles.buttonsContainerLogin}>
         <AppButton onPress={handleSubmit(onSubmit)} title='Log in' type='a'/>
-        <AppButton onPress={handleSubmit(onSubmit)} title='Sign up' type='b'/>
+        <AppButton onPress={()=>navigation.navigate('SignupScreen')} title='Sign up' type='b'/>
       </View>
     </View>
   );
