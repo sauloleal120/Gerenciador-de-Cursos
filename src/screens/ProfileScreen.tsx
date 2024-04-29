@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
-export function ProfileScreen() {
+export function ProfileScreen({route}) {
     const navigation = useNavigation();
 
     return (
 
       
 
-  <View style={styles.mainContainer}>
+  <SafeAreaView style={styles.mainContainer}>
     <Text style={styles.title}>Profile</Text>
      
 
@@ -36,7 +36,7 @@ export function ProfileScreen() {
 
       </View>
 
-  </View>
+  </SafeAreaView>
     
 
   

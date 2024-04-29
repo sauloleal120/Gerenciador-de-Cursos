@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AppButton from '../shared/components/AppButton';
 import {useForm, Controller } from 'react-hook-form'
@@ -21,12 +21,13 @@ export default function LoginScreen({route}) {
 
    const { usuario } = route.params;
 
-
    const checkLogin = (user, password)=>{
      
 
      const newUsers = usuario.filter( (x)=> x.email === user )
-     if (newUsers[0].password == password) navigation.navigate('Main')
+     if (newUsers[0].password == password) navigation.navigate('Main', {usuarioAtual: newUsers[0].name})
+
+    
 
    }
 
@@ -44,7 +45,7 @@ const onSubmit = (data: FormData) => checkLogin(data?.email, data?.password)
 
 
 
-    <View style={styles.mainContainer}>
+    <SafeAreaView style={styles.mainContainer}>
 
       <View style={styles.imageContainer}> 
           <LoginScreenImage width={350} height={350} />
@@ -102,7 +103,8 @@ const onSubmit = (data: FormData) => checkLogin(data?.email, data?.password)
         <AppButton onPress={handleSubmit(onSubmit)} title='Log in' type='a'/>
         <AppButton onPress={()=>navigation.navigate('SignupScreen')} title='Sign up' type='b'/>
       </View>
-    </View>
+    </SafeAreaView>
+
   );
 }
 

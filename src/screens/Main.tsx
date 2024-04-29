@@ -15,7 +15,10 @@ const Tab = createBottomTabNavigator();
 
 
 
-export function Main() {
+export function Main({route}) {
+
+
+  const {usuarioAtual} = route.params;  
     
   return (
 
@@ -32,6 +35,8 @@ export function Main() {
       }} 
       name="Courses" 
       component={CoursesScreen} 
+      initialParams={{usuarioAtual: usuarioAtual}}
+
       />
 
       <Tab.Screen 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet, TextInput, FlatList, TouchableOpacity  } from 'react-native';
+import { View, Text, Image, StyleSheet, TextInput, FlatList, TouchableOpacity, SafeAreaView  } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import {useForm, Controller} from 'react-hook-form';
@@ -13,9 +13,11 @@ type FormData = {
      
 
 
-export function CoursesScreen() {
+export function CoursesScreen({route}) {
 
     const {control, handleSubmit} = useForm<FormData>()
+
+    const {usuarioAtual} = route.params;
 
     const onSubmit = (data: FormData) => console.log(data.searchCourse) 
   
@@ -43,13 +45,13 @@ export function CoursesScreen() {
 
     return (
 
-      <View style={styles.mainContainer}>
+      <SafeAreaView style={styles.mainContainer}>
 
               <Text style={styles.greeting}> Hello, </Text>
 
               <View style={styles.nameContainer}>
                <TouchableOpacity onPress={handleSubmit(onSubmit)} >
-                 <Text style={styles.name}> Saulo Leal </Text>
+                 <Text style={styles.name}> {usuarioAtual} </Text>
                </TouchableOpacity>
                  <MaterialCommunityIcons style={styles.bell} name="bell-ring-outline" size={40} color="black" />
               </View>
@@ -92,7 +94,7 @@ export function CoursesScreen() {
 
              </View>
          
-      </View>
+      </SafeAreaView>
 
             
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet, Switch } from 'react-native';
+import { View, Text, Image, StyleSheet, Switch, SafeAreaView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
@@ -18,7 +18,7 @@ export function SettingsScreen() {
 
       
 
-  <View style={styles.mainContainer}>
+  <SafeAreaView style={styles.mainContainer}>
     <Text style={styles.title}>Settings</Text>
      
 
@@ -67,7 +67,7 @@ export function SettingsScreen() {
            
       </View>
 
-  </View>
+  </SafeAreaView>
     
 
     );}

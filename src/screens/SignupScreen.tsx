@@ -3,8 +3,8 @@ import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'reac
 import AppButton from '../shared/components/AppButton';
 import {useForm, Controller } from 'react-hook-form'
 import { useNavigation } from '@react-navigation/native';
-
 import SignupScreenImage from '../../assets/Images/SignupScreenImage.svg'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type FormData = {
 
@@ -22,14 +22,7 @@ export function SignupScreen({route}) {
 
   const { usuario, setUsuario } = route.params;
 
-  // const checkLogin = (user: string)=>{
 
-  //   const newUsers = usuario.filter( (x: string)=> x.name === user )
-  //   if (newUsers.length == 1) return true
-
-      
-  //   else false
-  // }
 
   function addUser(name, email, password){
 
@@ -42,9 +35,7 @@ export function SignupScreen({route}) {
       })
 
     
-   
-   // console.log(usuario)
-    
+      
   
     }
 
@@ -67,7 +58,7 @@ export function SignupScreen({route}) {
 
 
     return(
-      <View style={styles.mainContainer}>
+      <SafeAreaView style={styles.mainContainer}>
         
         <View style={styles.imageContainer}>
         <SignupScreenImage width={350} height={350} />
@@ -145,7 +136,7 @@ export function SignupScreen({route}) {
       
         
   
-      </View>
+      </SafeAreaView>
     );
   }
   
