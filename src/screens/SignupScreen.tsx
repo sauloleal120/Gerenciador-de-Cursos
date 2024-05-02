@@ -5,7 +5,7 @@ import {useForm, Controller } from 'react-hook-form'
 import { useNavigation } from '@react-navigation/native';
 import SignupScreenImage from '../../assets/Images/SignupScreenImage.svg'
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import { MaterialIcons } from '@expo/vector-icons';
 type FormData = {
 
   name: string,
@@ -20,7 +20,7 @@ export function SignupScreen({route}) {
   const navigation = useNavigation();
 
 
-  const { usuario, setUsuario } = route.params;
+  const { usuario } = route.params;
 
 
 
@@ -60,6 +60,10 @@ export function SignupScreen({route}) {
     return(
       <SafeAreaView style={styles.mainContainer}>
         
+        <TouchableOpacity style={styles.backButton} onPress={ ()=> navigation.navigate('LoginScreen') } >
+        <MaterialIcons name="arrow-back-ios-new" size={24} color="#3b3a36" />
+        </TouchableOpacity>
+
         <View style={styles.imageContainer}>
         <SignupScreenImage width={350} height={350} />
 
@@ -195,5 +199,20 @@ export function SignupScreen({route}) {
       marginTop:20,
       alignItems:'center'
     },
+    
+    backButton: {
+
+      borderWidth:1,
+      borderColor:'gray',
+      height: 50,
+      width: 50,
+      borderRadius: 25,
+      position:'absolute',
+      left:25,
+      top: 50,
+      justifyContent:'center',
+      alignItems:'center',
+      
+    }
   
   })

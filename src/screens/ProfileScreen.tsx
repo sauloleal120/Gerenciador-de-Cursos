@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 export function ProfileScreen({route}) {
     const navigation = useNavigation();
 
+    
+
     return (
 
       
@@ -19,7 +21,7 @@ export function ProfileScreen({route}) {
          source={require('../../assets/Images/ProfileImage.png')}
         />
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('LoginScreen')} >
               <Text style={styles.primaryText}> Your Courses </Text>
             </TouchableOpacity>
 
@@ -27,7 +29,7 @@ export function ProfileScreen({route}) {
               <Text style={styles.primaryText}> Saved </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=> navigation.navigate('LoginScreen')} >
               <Text style={styles.secondaryText}>Log out</Text>
             </TouchableOpacity>
 

@@ -38,6 +38,7 @@ export function Main({route}) {
       initialParams={{usuarioAtual: usuarioAtual}}
 
       />
+      
 
       <Tab.Screen 
        options={{
