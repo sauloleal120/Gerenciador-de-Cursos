@@ -21,8 +21,9 @@ export function CoursesScreen({route}) {
 
     const {usuarioAtual} = route.params;
 
-    const onSubmit = (data: FormData) => console.log(data.searchCourse) 
-  
+    const onSubmit = (data: FormData) => {setInput(data.searchCourse)}
+    
+    const [input, setInput] = useState();
 
     const [categories, setCategories] = useState([
 
@@ -68,12 +69,16 @@ export function CoursesScreen({route}) {
                     placeholder='Search course' 
                     style={styles.input} 
                     value={value} 
-                    onChangeText={onChange} />
+                    onChangeText={(text)=>setInput(text)}
+                    autoCapitalize='none'
+                     />
 
                 )}
             />
                
-                <AntDesign name="search1" size={30} color="black" style={styles.lupa} />
+               <TouchableOpacity style={styles.lupa} onPress={handleSubmit(onSubmit)} >
+                <AntDesign name="search1" size={30} color="black" />
+               </TouchableOpacity>
 
              </View>
                 
@@ -90,9 +95,10 @@ export function CoursesScreen({route}) {
 
                 <FlatList
                 data={courses}
-                renderItem={({item})=> <CoursesListComponent data={item} /> }
+                renderItem={({item})=> <CoursesListComponent data={item} textInput={input} /> }
                 
                 />
+
 
              </View>
          
@@ -105,31 +111,63 @@ export function CoursesScreen({route}) {
     );}
 
 
-    function CoursesListComponent ({data}){
+    function CoursesListComponent ({data, textInput}){
+
+       
 
         const navigation = useNavigation();
 
+        if(textInput == null){
+            return(
+                <TouchableOpacity onPress={()=> {
+                    navigation.navigate('CourseInfo', 
+                    {
+                        name: data.name,
+                        about: data.about,
+                        duration: data.duration,
+                    }) }
+                    } >
 
-        return(
-            <TouchableOpacity onPress={()=> {
-                navigation.navigate('CourseInfo', 
-                {
-                    name: data.name,
-                    about: data.about,
-                    duration: data.duration,
-                }) }
-                } >
+                        
+    
+                <View style={styles.coursesCardContainer}>
+                    
+                    <Text style={styles.coursesDuration}> {data.duration} </Text>
+                    <Text style={styles.coursesTitle}> {data.name} </Text>
+                    <Text style={styles.coursesBrief}> {data.brief} </Text>
+    
+                </View>
+                </TouchableOpacity>
+            )
+    
+            
+        }
 
-            <View style={styles.coursesCardContainer}>
-                
-                <Text style={styles.coursesDuration}> {data.duration} </Text>
-                <Text style={styles.coursesTitle}> {data.name} </Text>
-                <Text style={styles.coursesBrief}> {data.brief} </Text>
+        if(data.name.toLowerCase().includes(textInput?.toLowerCase())){
+            return(
+                <TouchableOpacity onPress={()=> {
+                    navigation.navigate('CourseInfo', 
+                    {
+                        name: data.name,
+                        about: data.about,
+                        duration: data.duration,
+                    }) }
+                    } >
+    
+                <View style={styles.coursesCardContainer}>
+                    
+                    <Text style={styles.coursesDuration}> {data.duration} </Text>
+                    <Text style={styles.coursesTitle}> {data.name} </Text>
+                    <Text style={styles.coursesBrief}> {data.brief} </Text>
+    
+                </View>
+                </TouchableOpacity>
+            )
+    
+            
+        }
 
-            </View>
-            </TouchableOpacity>
-        )
-
+       
     }
 
 
