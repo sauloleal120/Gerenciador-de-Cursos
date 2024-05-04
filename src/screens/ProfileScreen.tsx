@@ -21,7 +21,7 @@ export function ProfileScreen({route}) {
          source={require('../../assets/Images/ProfileImage.png')}
         />
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('LoginScreen')} >
+            <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('CourseInfo')} >
               <Text style={styles.primaryText}> Your Courses </Text>
             </TouchableOpacity>
 
