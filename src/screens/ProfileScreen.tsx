@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import AvatarImage from '../../assets/Images/Avatar.svg'
 
 export function ProfileScreen({route}) {
     const navigation = useNavigation();
@@ -17,9 +18,8 @@ export function ProfileScreen({route}) {
      
 
       <View style={styles.imageContainer}>
-        <Image style={styles.profileImage} 
-         source={require('../../assets/Images/ProfileImage.png')}
-        />
+      <AvatarImage width={200} height={200} />
+        
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('CourseInfo')} >
               <Text style={styles.primaryText}> Your Courses </Text>
@@ -57,11 +57,7 @@ export function ProfileScreen({route}) {
       width:'100%',
     },
   
-    profileImage:{
-      width: 200,
-      height: 200,
-    },
-  
+
     imageContainer:{
       position:'absolute',
       top: 130,
