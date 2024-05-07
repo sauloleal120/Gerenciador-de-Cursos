@@ -1,170 +1,158 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  SafeAreaView,
+  KeyboardAvoidingView,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import AppButton from '../shared/components/AppButton';
-import {useForm, Controller } from 'react-hook-form'
+import {useForm, Controller} from 'react-hook-form';
 
-import LoginScreenImage from '../../assets/Images/primeira_imagem.svg'
-
+import LoginScreenImage from '../../assets/Images/primeira_imagem.svg';
 
 type FormData = {
-
-  email: string,
-  password: string
-
-}
+  email: string;
+  password: string;
+};
 
 export default function LoginScreen({route}) {
-
-   
   const navigation = useNavigation();
 
-   const { usuario } = route.params;
+  const {usuario} = route.params;
 
-   const checkLogin = (user, password)=>{
-     
+  const checkLogin = (user, password) => {
+    const newUsers = usuario.filter(x => x.email === user);
 
-     const newUsers = usuario.filter( (x)=> x.email === user )
-     if (newUsers[0].password == password) navigation.navigate('Main', {usuarioAtual: newUsers[0].name})
+    if (newUsers[0].password == password) {
+      navigation.navigate('Main', {usuarioAtual: newUsers[0].name});
+    }
+  };
 
-    
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<FormData>();
 
-   }
+  //useEffect(()=> alert( errors?.email?.message ), [ errors?.email ])
+  //useEffect(()=> alert( errors?.password?.message ), [ errors?.password ])
 
-
-const {control, handleSubmit, formState: {errors} } = useForm<FormData>()
-
-//useEffect(()=> alert( errors?.email?.message ), [ errors?.email ])
-//useEffect(()=> alert( errors?.password?.message ), [ errors?.password ])
-
-const onSubmit = (data: FormData) => checkLogin(data?.email, data?.password) 
-
+  const onSubmit = (data: FormData) => checkLogin(data?.email, data?.password);
 
   return (
-
-
-
-
     <SafeAreaView style={styles.mainContainer}>
-
-      <View style={styles.imageContainer}> 
-          <LoginScreenImage width={350} height={350} />
+      <View style={styles.imageContainer}>
+        <LoginScreenImage width={350} height={350} />
       </View>
 
       <View style={styles.inputContainerLogin}>
-        <TouchableOpacity onPress={()=>navigation.navigate('Main')} >
-        <Text style={styles.primaryText} > Log in </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Main')}>
+          <Text style={styles.primaryText}> Log in </Text>
         </TouchableOpacity>
 
         <Controller
-                control={control}
-                name={'email'}
-                rules={{
-                  required: 'e-mail obrigatório'
-                }}
-                render={({ field: {value, onChange} }) =>(
-                  <TextInput 
-                    placeholder='Email' 
-                    style={styles.input} 
-                    value={value} 
-                    onChangeText={onChange}
-                    autoCapitalize='none'
-                     />
-
-                )}
+          control={control}
+          name={'email'}
+          rules={{
+            required: 'e-mail obrigatório',
+          }}
+          render={({field: {value, onChange}}) => (
+            <TextInput
+              placeholder="Email"
+              style={styles.input}
+              value={value}
+              onChangeText={onChange}
+              autoCapitalize="none"
+            />
+          )}
         />
 
         <Controller
-                control={control}
-                name={'password'}
-                rules={{
-                  required: 'senha obrigatória'
-                }}
-                render={({ field: {value, onChange} }) =>(
-                  <TextInput 
-                    placeholder='Password' 
-                    style={styles.input} 
-                    value={value} 
-                    onChangeText={onChange}
-                    autoCapitalize='none' 
-                   // secureTextEntry
-                    />
-                    
-                )}
+          control={control}
+          name={'password'}
+          rules={{
+            required: 'senha obrigatória',
+          }}
+          render={({field: {value, onChange}}) => (
+            <TextInput
+              placeholder="Password"
+              style={styles.input}
+              value={value}
+              onChangeText={onChange}
+              autoCapitalize="none"
+              // secureTextEntry
+            />
+          )}
         />
-
-
       </View>
-        <TouchableOpacity onPress={()=>console.log(usuario)} >
+      <TouchableOpacity onPress={() => console.log(usuario)}>
         <Text style={styles.secondaryText}>Forgot Password?</Text>
-        </TouchableOpacity>
-     
+      </TouchableOpacity>
+
       <View style={styles.buttonsContainerLogin}>
-        <AppButton onPress={handleSubmit(onSubmit)} title='Log in' type='a'/>
-        <AppButton onPress={()=>navigation.navigate('SignupScreen')} title='Sign up' type='b'/>
+        <AppButton onPress={handleSubmit(onSubmit)} title="Log in" type="a" />
+        <AppButton
+          onPress={() => navigation.navigate('SignupScreen')}
+          title="Sign up"
+          type="b"
+        />
       </View>
     </SafeAreaView>
-
   );
 }
 
-
-
-
 const styles = StyleSheet.create({
-
-  mainContainer:{ 
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center', 
+  mainContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
-  loginImage:{
+  loginImage: {
     width: 300,
     height: 300,
   },
- 
-  primaryText:{
+
+  primaryText: {
     fontWeight: 'bold',
     fontSize: 20,
     color: '#3b3a36',
     marginTop: 100,
-    marginBottom: 10
-
+    marginBottom: 10,
   },
-  imageContainer:{
-    position:'absolute',
+  imageContainer: {
+    position: 'absolute',
     top: 70,
     margin: 10,
-    
   },
-  input:{
+  input: {
     borderColor: 'black',
     borderWidth: 1,
     width: '100%',
     height: 45,
     borderRadius: 8,
     margin: 10,
-    padding: 10
+    padding: 10,
   },
-  inputContainerLogin:{
+  inputContainerLogin: {
     marginTop: 230,
-    alignItems:'center',
-    width:'90%',
-    marginBottom: 10
+    alignItems: 'center',
+    width: '90%',
+    marginBottom: 10,
   },
- 
-  secondaryText:{
+
+  secondaryText: {
     color: 'gray',
-    fontWeight:'bold'
+    fontWeight: 'bold',
   },
-  buttonsContainerLogin:{
-    width:'90%',
-    marginTop:20,
-    alignItems:'center'
+  buttonsContainerLogin: {
+    width: '90%',
+    marginTop: 20,
+    alignItems: 'center',
   },
-
-
-
-
-})
+});
