@@ -25,6 +25,7 @@ export function CoursesScreen({route}) {
     
     const [input, setInput] = useState();
 
+
     const [categories, setCategories] = useState([
 
         {key:1, name:'#CSS'},
@@ -91,6 +92,9 @@ export function CoursesScreen({route}) {
                  />
              </View>
 
+             <ResultComponent data={courses} textInput={input} />
+
+
              <View style={styles.coursesListContainer}>
 
                 <FlatList
@@ -111,7 +115,7 @@ export function CoursesScreen({route}) {
     );}
 
 
-    function CoursesListComponent ({data, textInput}){
+    export function CoursesListComponent ({data, textInput}){
 
        
 
@@ -144,6 +148,9 @@ export function CoursesScreen({route}) {
         }
 
         if(data.name.toLowerCase().includes(textInput?.toLowerCase())){
+
+           // setResultCount('data.length')
+
             return(
                 <TouchableOpacity onPress={()=> {
                     navigation.navigate('CourseInfo', 
@@ -167,9 +174,33 @@ export function CoursesScreen({route}) {
             
         }
 
+ 
+
        
     }
 
+    export function ResultComponent({data, textInput}){
+
+   
+
+           const novo = data.filter( item => item.name.toLowerCase().includes(textInput.toLowerCase()) )
+ 
+
+
+                
+
+             return(
+                 <View style={styles.resultComponent}>
+                       
+                        <Text style={styles.coursesTitle}>  {textInput == '' ? null : novo.length == 1 ?  novo.length + " Result" : novo.length + " Results" }  </Text>
+                 </View>
+             )
+     
+             
+      
+
+    }
+    
 
 
 
@@ -279,6 +310,12 @@ export function CoursesScreen({route}) {
         height: 480
 
     },
+
+    resultComponent:{
+
+        marginTop: 0,
+        marginBottom: 0,
+    }
 
 
   

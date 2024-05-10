@@ -8,8 +8,9 @@ import { ProfileScreen } from '../../src/screens/ProfileScreen';
 import { SettingsScreen } from '../../src/screens/SettingsScreen';
 import { CoursesScreen } from '../../src/screens/CoursesScreen';
 
-import Feather from 'react-native-vector-icons/Feather';
 
+import Feather from '@expo/vector-icons/Feather';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +31,7 @@ export function Main({route}) {
         headerShown:false,
         
         tabBarIcon: ({color, size}) => {
-          return <Feather name="book" color={'#e3562a'} size={size}/>
+<MaterialIcons name="book-online" size={24} color="black" />                 
         }
       }} 
       name="Courses" 
