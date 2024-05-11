@@ -1,139 +1,115 @@
-
-
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {StyleSheet} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import { ProfileScreen } from '../../src/screens/ProfileScreen';
-import { SettingsScreen } from '../../src/screens/SettingsScreen';
-import { CoursesScreen } from '../../src/screens/CoursesScreen';
+import {ProfileScreen} from '../../src/screens/ProfileScreen';
+import {SettingsScreen} from '../../src/screens/SettingsScreen';
+import {CoursesScreen} from '../../src/screens/CoursesScreen';
 
 import Feather from 'react-native-vector-icons/Feather';
 
-
 const Tab = createBottomTabNavigator();
 
-
-
 export function Main({route}) {
+  const {usuarioAtual} = route.params;
 
-
-  const {usuarioAtual} = route.params;  
-    
   return (
-
-   
     <Tab.Navigator>
-      <Tab.Screen 
-      
-      options={{
-        headerShown:false,
-        tabBarHideOnKeyboard: true,
-        tabBarIcon: ({color, size}) => {
-          return <Feather name="book" color={'#e3562a'} size={size}/>
-        }
-      }} 
-      name="Courses" 
-      component={CoursesScreen} 
-      initialParams={{usuarioAtual: usuarioAtual}}
-
-      />
-      
-
-      <Tab.Screen 
-       options={{
-        headerShown:false,
-        tabBarIcon: ({color, size}) => {
-          return <Feather name="user" color={'#e3562a'} size={size}/>
-        }
-      }} 
-      name="Profile" 
-      component={ProfileScreen} 
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarHideOnKeyboard: true,
+          tabBarIcon: ({color, size}) => {
+            return <Feather name="book" color={'#e3562a'} size={size} />;
+          },
+        }}
+        name="Courses"
+        component={CoursesScreen}
+        initialParams={{usuarioAtual: usuarioAtual}}
       />
 
-      <Tab.Screen 
-       options={{
-        headerShown:false,
-        tabBarIcon: ({color, size}) => {
-          return <Feather name="settings" color={'#e3562a'} size={size}/>
-        }
-      }} 
-      name="Settings" 
-      component={SettingsScreen} 
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({size}) => {
+            return <Feather name="user" color={'#e3562a'} size={size} />;
+          },
+        }}
+        name="Profile"
+        component={ProfileScreen}
       />
-      
 
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          tabBarIcon: ({size}) => {
+            return <Feather name="settings" color={'#e3562a'} size={size} />;
+          },
+        }}
+        name="Settings"
+        component={SettingsScreen}
+      />
     </Tab.Navigator>
   );
 }
 
-
-
 const styles = StyleSheet.create({
-
-  mainContainer:{ 
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    width:'100%',
+  mainContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
 
-  profileImage:{
+  profileImage: {
     width: 200,
     height: 200,
   },
 
-  imageContainer:{
-    position:'absolute',
+  imageContainer: {
+    position: 'absolute',
     top: 130,
-
-
   },
- 
-  title:{
+
+  title: {
     fontWeight: 'bold',
     fontSize: 30,
     color: '#3b3a36',
-    position:'absolute',
-    top:40,
-    marginBottom: 10
-    
+    position: 'absolute',
+    top: 40,
+    marginBottom: 10,
   },
-  mainTextContainer:{
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    position:'absolute',
-    
-    top: 45
+  mainTextContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+
+    top: 45,
   },
-  primaryText:{
+  primaryText: {
     fontWeight: 'bold',
     fontSize: 25,
     color: '#3b3a36',
   },
 
-  secondaryText:{
+  secondaryText: {
     color: 'gray',
-    fontWeight:'bold'
+    fontWeight: 'bold',
   },
 
-  button:{
+  button: {
     borderRadius: 15,
     borderColor: 'gray',
-    borderWidth:1,
-    alignItems:'center',
-    justifyContent:'center',
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     margin: 10,
     height: 80,
-    width:'170%'
-},
+    width: '170%',
+  },
 
-buttonContainer:{
-  alignItems:'center',
-  marginTop:20
-  
-}
-
-})
-
-
+  buttonContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+});

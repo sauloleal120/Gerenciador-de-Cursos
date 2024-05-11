@@ -12,6 +12,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {AntDesign} from '@expo/vector-icons';
 import {useForm, Controller} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
+import {MaterialIcons} from '@expo/vector-icons';
 
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
 
@@ -19,10 +20,10 @@ type FormData = {
   searchCourse: string;
 };
 
-export function CoursesScreen({route}) {
+export function SavedCourses({route}) {
+  const {savedCourses, setSavedCourses} = route.params;
+  const navigation = useNavigation();
   const {control, handleSubmit} = useForm<FormData>();
-
-  const {usuarioAtual} = route.params;
 
   const onSubmit = (data: FormData) => {
     setInput(data.searchCourse);
@@ -37,86 +38,31 @@ export function CoursesScreen({route}) {
     {key: 4, name: '#UI'},
   ]);
 
-  const [courses, setCourses] = useState([
-    {
-      key: 1,
-      name: 'UII',
-      duration: '2h30min',
-      brief: 'Advanved mobile interface design',
-      about:
-        'Completed UI Design Essentials Course at Design Academy, Anytown, USA (July 2024). Proficient in UI design principles, wireframing, prototyping tools, and user-centered design. Developed practical projects focusing on creating intuitive and visually appealing interfaces',
-      price: 50,
-    },
-    {
-      key: 2,
-      name: 'HTML',
-      duration: '3h10min',
-      brief: 'Advanced web applications',
-      about:
-        'Completed HTML Mastery Course at Tech Academy, Anytown, USA (May 2024). Proficient in HTML5, basic CSS, and responsive web design. Developed projects including a personal portfolio website and recipe page.',
-      price: 60,
-    },
-    {
-      key: 3,
-      name: 'UI Advanced',
-      duration: '2h15min',
-      brief: 'Advanved mobile interface design',
-      about:
-        'Proficient in advanced UI design concepts including interaction design, information architecture, and usability testing. Skilled in prototyping tools such as Adobe XD and Figma. Developed complex projects emphasizing user-centered design principles and accessibility standards.',
-      price: 55,
-    },
-    {
-      key: 4,
-      name: 'Swift',
-      duration: '1h30min',
-      brief: 'Advanved iOS apps',
-      about:
-        'Proficient in Swift programming language for iOS development. Developed skills in mobile app development, including UI design, data handling, and integrating APIs. Created projects showcasing proficiency in Swift and iOS app development best practices.',
-      price: 65,
-    },
-    {
-      key: 5,
-      name: 'Scrum',
-      duration: '2h30min',
-      brief: 'Advanved project organization course',
-      about:
-        'Acquired foundational knowledge in Scrum methodology, Agile principles, and team collaboration. Demonstrated skills in sprint planning, daily stand-ups, and agile project management. Completed practical exercises and simulations to apply Scrum practices in real-world scenarios.',
-      price: 48,
-    },
-    {
-      key: 6,
-      name: 'Javascript',
-      duration: '3h30 min',
-      brief: 'Programming language',
-      about:
-        'Proficient in JavaScript programming language for web development. Developed skills in front-end and back-end scripting, DOM manipulation, and asynchronous programming. Created interactive web applications and projects showcasing JavaScript proficiency and modern development practices.',
-      price: 70,
-    },
-    {
-      key: 7,
-      name: 'React Native',
-      duration: '3h50 min',
-      brief: 'Advanced React Native course',
-      about:
-        'Proficient in React Native framework for cross-platform mobile app development. Developed skills in building mobile applications using React Native components, state management, and navigation. Created and deployed mobile apps for iOS and Android platforms, showcasing React Native expertise.',
-      price: 65,
-    },
-  ]);
+  const [courses, setCourses] = useState([]);
+
+  const handleDelete = name => {
+    const newCoursesList = savedCourses.filter( item => item.name === name );
+    setSavedCourses(savedCourses => [
+      ...savedCourses, newCoursesList
+
+    ]);
+    console.log('new: ');
+    console.log(savedCourses);
+
+
+
+ 
+  };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <Text style={styles.greeting}> Hello, </Text>
-
-      <View style={styles.nameContainer}>
-        <TouchableOpacity onPress={handleSubmit(onSubmit)}>
-          <Text style={styles.name}> {usuarioAtual} </Text>
+      <View style={styles.titleContainer}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}>
+          <MaterialIcons name="arrow-back-ios-new" size={24} color="#3b3a36" />
         </TouchableOpacity>
-        <MaterialCommunityIcons
-          style={styles.bell}
-          name="bell-ring-outline"
-          size={40}
-          color="black"
-        />
+        <Text style={styles.title}> Saved Courses </Text>
       </View>
 
       <View style={styles.inputContainer}>
@@ -154,9 +100,14 @@ export function CoursesScreen({route}) {
 
       <View style={styles.coursesListContainer}>
         <FlatList
-          data={courses}
+          data={savedCourses}
           renderItem={({item}) => (
-            <CoursesListComponent data={item} textInput={input} />
+            <CoursesListComponent
+              data={item}
+              textInput={input}
+              savedCourses={savedCourses}
+              setSavedCourses={setSavedCourses}
+            />
           )}
         />
       </View>
@@ -164,7 +115,7 @@ export function CoursesScreen({route}) {
   );
 }
 
-export function CoursesListComponent({data, textInput}) {
+export function CoursesListComponent({data, textInput, savedCourses, setSavedCourses}) {
   const navigation = useNavigation();
 
   if (textInput == null) {
@@ -175,14 +126,20 @@ export function CoursesListComponent({data, textInput}) {
             name: data.name,
             about: data.about,
             duration: data.duration,
-            brief: data.brief,
             price: data.price,
+            brief: data.brief,
+            from: 'savedCourses',
           });
         }}>
         <View style={styles.coursesCardContainer}>
           <Text style={styles.coursesDuration}> {data.duration} </Text>
           <Text style={styles.coursesTitle}> {data.name} </Text>
           <Text style={styles.coursesBrief}> {data.brief} </Text>
+          <MaterialCommunityIcons
+            name="trash-can-outline"
+            size={24}
+            color="black"
+          />
         </View>
       </TouchableOpacity>
     );
@@ -192,23 +149,38 @@ export function CoursesListComponent({data, textInput}) {
     // setResultCount('data.length')
 
     return (
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('CourseInfo', {
-            key: data.key,
-            name: data.name,
-            about: data.about,
-            brief: data.brief,
-            duration: data.duration,
-            price: data.price,
-          });
-        }}>
-        <View style={styles.coursesCardContainer}>
-          <Text style={styles.coursesDuration}> {data.duration} </Text>
-          <Text style={styles.coursesTitle}> {data.name} </Text>
-          <Text style={styles.coursesBrief}> {data.brief} </Text>
-        </View>
-      </TouchableOpacity>
+      <View style={styles.wrapCoursesCardContainer}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('CourseInfo', {
+              name: data.name,
+              about: data.about,
+              duration: data.duration,
+              price: data.price,
+              brief: data.brief,
+              from: 'savedCourses',
+            });
+          }}>
+          <View style={styles.coursesCardContainer}>
+            <Text style={styles.coursesDuration}> {data.duration} </Text>
+            <Text style={styles.coursesTitle}> {data.name} </Text>
+            <Text style={styles.coursesBrief}> {data.brief} </Text>
+          </View>
+        </TouchableOpacity>
+
+{/* função delete ainda não funciona */}
+
+        <TouchableOpacity
+          onPress={()=> setSavedCourses(savedCourses => savedCourses.filter(item => item.name !== data.name),
+            )
+          }>
+          <MaterialCommunityIcons
+            name="trash-can-outline"
+            size={24}
+            color="black"
+          />
+        </TouchableOpacity>
+      </View>
     );
   }
 }
@@ -218,14 +190,14 @@ export function ResultComponent({data, textInput}) {
     item.name?.toLowerCase().includes(textInput?.toLowerCase()),
   );
 
-  if (textInput !== '' && novo.length === 0) {
+  if (textInput !== '' && novo.length == 0) {
     return (
       <View style={styles.resultComponent}>
         <Text style={styles.coursesTitle}>
           {' '}
-          {textInput === ''
+          {textInput == ''
             ? null
-            : novo.length === 1
+            : novo.length == 1
             ? novo.length + ' Result'
             : novo.length + ' Results'}{' '}
         </Text>
@@ -366,5 +338,35 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     color: 'gray',
+  },
+  title: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 30,
+    margin: 30,
+    fontWeight: 'bold',
+    color: '#3b3a36',
+  },
+  backButton: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    position: 'absolute',
+    left: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  titleContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  wrapCoursesCardContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
