@@ -41,17 +41,10 @@ export function SavedCourses({route}) {
   const [courses, setCourses] = useState([]);
 
   const handleDelete = name => {
-    const newCoursesList = savedCourses.filter( item => item.name === name );
-    setSavedCourses(savedCourses => [
-      ...savedCourses, newCoursesList
-
-    ]);
+    const newCoursesList = savedCourses.filter(item => item.name === name);
+    setSavedCourses(savedCourses => [...savedCourses, newCoursesList]);
     console.log('new: ');
     console.log(savedCourses);
-
-
-
- 
   };
 
   return (
@@ -115,7 +108,12 @@ export function SavedCourses({route}) {
   );
 }
 
-export function CoursesListComponent({data, textInput, savedCourses, setSavedCourses}) {
+export function CoursesListComponent({
+  data,
+  textInput,
+  savedCourses,
+  setSavedCourses,
+}) {
   const navigation = useNavigation();
 
   if (textInput == null) {
@@ -135,11 +133,18 @@ export function CoursesListComponent({data, textInput, savedCourses, setSavedCou
           <Text style={styles.coursesDuration}> {data.duration} </Text>
           <Text style={styles.coursesTitle}> {data.name} </Text>
           <Text style={styles.coursesBrief}> {data.brief} </Text>
-          <MaterialCommunityIcons
-            name="trash-can-outline"
-            size={24}
-            color="black"
-          />
+          <TouchableOpacity
+            onPress={() =>
+              setSavedCourses(savedCourses =>
+                savedCourses.filter(item => item.name !== data.name),
+              )
+            }>
+            <MaterialCommunityIcons
+              name="trash-can-outline"
+              size={24}
+              color="black"
+            />
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     );
@@ -168,16 +173,18 @@ export function CoursesListComponent({data, textInput, savedCourses, setSavedCou
           </View>
         </TouchableOpacity>
 
-{/* função delete ainda não funciona */}
+        {/* função delete ainda não está 100%, funciona mas é preciso sair e voltar na tela para ver o resultado */}
 
         <TouchableOpacity
-          onPress={()=> setSavedCourses(savedCourses => savedCourses.filter(item => item.name !== data.name),
+          onPress={() =>
+            setSavedCourses(savedCourses =>
+              savedCourses.filter(item => item.name !== data.name),
             )
           }>
           <MaterialCommunityIcons
             name="trash-can-outline"
             size={24}
-            color="black"
+            color="red"
           />
         </TouchableOpacity>
       </View>
