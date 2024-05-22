@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {ProfileScreen} from '../../src/screens/ProfileScreen';
@@ -11,7 +10,7 @@ import Feather from 'react-native-vector-icons/Feather';
 const Tab = createBottomTabNavigator();
 
 export function Main({route}) {
-  const {usuarioAtual} = route.params;
+  const {usuarioAtual, emailAtual, passwordAtual} = route.params;
 
   return (
     <Tab.Navigator>
@@ -19,6 +18,7 @@ export function Main({route}) {
         options={{
           headerShown: false,
           tabBarHideOnKeyboard: true,
+          // eslint-disable-next-line react/no-unstable-nested-components
           tabBarIcon: ({color, size}) => {
             return <Feather name="book" color={'#e3562a'} size={size} />;
           },
@@ -31,6 +31,7 @@ export function Main({route}) {
       <Tab.Screen
         options={{
           headerShown: false,
+          // eslint-disable-next-line react/no-unstable-nested-components
           tabBarIcon: ({size}) => {
             return <Feather name="user" color={'#e3562a'} size={size} />;
           },
@@ -42,74 +43,19 @@ export function Main({route}) {
       <Tab.Screen
         options={{
           headerShown: false,
+          // eslint-disable-next-line react/no-unstable-nested-components
           tabBarIcon: ({size}) => {
             return <Feather name="settings" color={'#e3562a'} size={size} />;
           },
         }}
         name="Settings"
         component={SettingsScreen}
+        initialParams={{
+          usuarioAtual: usuarioAtual,
+          emailAtual: emailAtual,
+          passwordAtual: passwordAtual,
+        }}
       />
     </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-  },
-
-  profileImage: {
-    width: 200,
-    height: 200,
-  },
-
-  imageContainer: {
-    position: 'absolute',
-    top: 130,
-  },
-
-  title: {
-    fontWeight: 'bold',
-    fontSize: 30,
-    color: '#3b3a36',
-    position: 'absolute',
-    top: 40,
-    marginBottom: 10,
-  },
-  mainTextContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-
-    top: 45,
-  },
-  primaryText: {
-    fontWeight: 'bold',
-    fontSize: 25,
-    color: '#3b3a36',
-  },
-
-  secondaryText: {
-    color: 'gray',
-    fontWeight: 'bold',
-  },
-
-  button: {
-    borderRadius: 15,
-    borderColor: 'gray',
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 10,
-    height: 80,
-    width: '170%',
-  },
-
-  buttonContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-});

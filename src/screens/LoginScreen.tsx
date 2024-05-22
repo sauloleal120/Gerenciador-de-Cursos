@@ -29,7 +29,7 @@ export default function LoginScreen({route}) {
     const newUsers = usuario.filter(x => x.email === user);
 
     if (newUsers[0].password == password) {
-      navigation.navigate('Main', {usuarioAtual: newUsers[0].name});
+      navigation.navigate('Main', {usuarioAtual: newUsers[0].name, emailAtual: newUsers[0].email, passwordAtual: newUsers[0].password});
     }
   };
 
