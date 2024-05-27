@@ -13,7 +13,7 @@ import {AntDesign} from '@expo/vector-icons';
 import {useForm, Controller} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 import {MaterialIcons} from '@expo/vector-icons';
-
+import {savedCoursesMock} from '../mocks/savedCoursesMock';
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
 
 type FormData = {
@@ -23,6 +23,7 @@ type FormData = {
 export function YourCourses({route}) {
 
     const {myCourses, setMyCourses} = route.params;
+    const [cursosSalvos, setCursosSalvos] = useState(savedCoursesMock);
     const navigation = useNavigation();
     const {control, handleSubmit} = useForm<FormData>();
 
@@ -85,7 +86,7 @@ export function YourCourses({route}) {
         />
       </View>
 
-      <ResultComponent data={courses} textInput={input} />
+      <ResultComponent data={myCourses} textInput={input} />
 
       <View style={styles.coursesListContainer}>
         <FlatList

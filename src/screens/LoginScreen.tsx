@@ -1,13 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   SafeAreaView,
-  KeyboardAvoidingView,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AppButton from '../shared/components/AppButton';
@@ -29,7 +27,11 @@ export default function LoginScreen({route}) {
     const newUsers = usuario.filter(x => x.email === user);
 
     if (newUsers[0].password == password) {
-      navigation.navigate('Main', {usuarioAtual: newUsers[0].name, emailAtual: newUsers[0].email, passwordAtual: newUsers[0].password});
+      navigation.navigate('Main', {
+        usuarioAtual: newUsers[0].name,
+        emailAtual: newUsers[0].email,
+        passwordAtual: newUsers[0].password,
+      });
     }
   };
 
