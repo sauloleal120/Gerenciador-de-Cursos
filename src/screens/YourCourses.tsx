@@ -8,13 +8,14 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import {MaterialCommunityIcons} from '@expo/vector-icons';
-import {AntDesign} from '@expo/vector-icons';
 import {useForm, Controller} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 import {MaterialIcons} from '@expo/vector-icons';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import {savedCoursesMock} from '../mocks/savedCoursesMock';
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
+
+import {useYourCourses} from '../store';
 
 type FormData = {
   searchCourse: string;
@@ -23,8 +24,8 @@ type FormData = {
 export function YourCourses({route}) {
 
     const {myCourses, setMyCourses} = route.params;
-    const [cursosSalvos, setCursosSalvos] = useState(savedCoursesMock);
     const navigation = useNavigation();
+    const yourCourses = useYourCourses(state=> state.yourCourses)
     const {control, handleSubmit} = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
@@ -40,9 +41,6 @@ export function YourCourses({route}) {
     {key: 4, name: '#UI'},
   ]);
 
-  const [courses, setCourses] = useState([
-   
-  ]);
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -90,7 +88,7 @@ export function YourCourses({route}) {
 
       <View style={styles.coursesListContainer}>
         <FlatList
-          data={myCourses}
+          data={yourCourses}
           renderItem={({item}) => (
             <CoursesListComponent data={item} textInput={input} />
           )}

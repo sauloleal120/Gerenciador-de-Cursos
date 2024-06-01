@@ -13,9 +13,10 @@ import {AntDesign} from '@expo/vector-icons';
 import {useForm, Controller} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 import {MaterialIcons} from '@expo/vector-icons';
-import {savedCourses} from '../mocks/savedCoursesMock';
 
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
+
+import {useCursosSalvosStore} from '../store';
 
 type FormData = {
   searchCourse: string;
@@ -23,7 +24,7 @@ type FormData = {
 
 export function SavedCourses({route}) {
   const {savedCourses, setSavedCourses} = route.params;
-  const [cursosSalvos, setCursosSalvos] = useState(savedCourses)
+
   const navigation = useNavigation();
   const {control, handleSubmit} = useForm<FormData>();
 
@@ -41,13 +42,10 @@ export function SavedCourses({route}) {
   ]);
 
   const [courses, setCourses] = useState([]);
+  const cursosSalvos = useCursosSalvosStore(state => state.cursosSalvos);
+  const delCurso = useCursosSalvosStore(state => state.removeCurso);
 
-  const handleDelete = name => {
-    const newCoursesList = savedCourses.filter(item => item.name === name);
-    setSavedCourses(savedCourses => [...savedCourses, newCoursesList]);
-    console.log('new: ');
-    console.log(savedCourses);
-  };
+
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -95,13 +93,14 @@ export function SavedCourses({route}) {
 
       <View style={styles.coursesListContainer}>
         <FlatList
-          data={savedCourses}
+          // extraData={savedCourses}
+          data={cursosSalvos}
           renderItem={({item}) => (
             <CoursesListComponent
               data={item}
               textInput={input}
-              savedCourses={savedCourses}
               setSavedCourses={setSavedCourses}
+              handleDelete={()=>delCurso(item.key)}
             />
           )}
         />
@@ -113,12 +112,12 @@ export function SavedCourses({route}) {
 export function CoursesListComponent({
   data,
   textInput,
-  savedCourses,
   setSavedCourses,
+  handleDelete,
 }) {
   const navigation = useNavigation();
 
-  if (textInput == null) {
+  if (textInput == 'a') {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -136,11 +135,7 @@ export function CoursesListComponent({
           <Text style={styles.coursesTitle}> {data.name} </Text>
           <Text style={styles.coursesBrief}> {data.brief} </Text>
           <TouchableOpacity
-            onPress={() =>
-              setSavedCourses(savedCourses =>
-                savedCourses.filter(item => item.name !== data.name),
-              )
-            }>
+            onPress={() => handleDelete }>
             <MaterialCommunityIcons
               name="trash-can-outline"
               size={24}
@@ -171,18 +166,13 @@ export function CoursesListComponent({
           <View style={styles.coursesCardContainer}>
             <Text style={styles.coursesDuration}> {data.duration} </Text>
             <Text style={styles.coursesTitle}> {data.name} </Text>
-            <Text style={styles.coursesBrief}> {data.brief} </Text>
+            <Text style={styles.coursesBrief}> {data.name} </Text>
           </View>
         </TouchableOpacity>
 
         {/* função delete ainda não está 100%, funciona mas é preciso sair e voltar na tela para ver o resultado */}
 
-        <TouchableOpacity
-          onPress={() =>
-            setSavedCourses(savedCourses =>
-              savedCourses.filter(item => item.name !== data.name),
-            )
-          }>
+        <TouchableOpacity onPress={handleDelete}>
           <MaterialCommunityIcons
             name="trash-can-outline"
             size={24}

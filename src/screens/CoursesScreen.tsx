@@ -15,6 +15,7 @@ import {useNavigation} from '@react-navigation/native';
 import {coursesMock} from '../mocks/mocks';
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
 
+
 type FormData = {
   searchCourse: string;
 };
@@ -38,7 +39,6 @@ export function CoursesScreen({route}) {
   ]);
 
   const [courses, setCourses] = useState(coursesMock);
-  
 
   return (
     <SafeAreaView style={styles.mainContainer}>

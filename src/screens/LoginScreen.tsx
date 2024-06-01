@@ -12,6 +12,7 @@ import AppButton from '../shared/components/AppButton';
 import {useForm, Controller} from 'react-hook-form';
 
 import LoginScreenImage from '../../assets/Images/primeira_imagem.svg';
+import {useUsuarios} from '../store';
 
 type FormData = {
   email: string;
@@ -21,8 +22,7 @@ type FormData = {
 export default function LoginScreen({route}) {
   const navigation = useNavigation();
 
-  const {usuario} = route.params;
-
+  const usuario = useUsuarios(state => state.users);
   const checkLogin = (user, password) => {
     const newUsers = usuario.filter(x => x.email === user);
 
@@ -31,7 +31,9 @@ export default function LoginScreen({route}) {
         usuarioAtual: newUsers[0].name,
         emailAtual: newUsers[0].email,
         passwordAtual: newUsers[0].password,
+        
       });
+      console.log(newUsers[0])
     }
   };
 
