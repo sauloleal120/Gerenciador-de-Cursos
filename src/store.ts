@@ -28,9 +28,9 @@ export const useUsuarios = create<UsuarioStore>(set => ({
   users: [
     {
       key: 1, 
-      name: 'ad', 
-      email: 'ad', 
-      password: 'ad'
+      name: 'admin', 
+      email: 'admin', 
+      password: 'admin'
     }
   ],
   addUsuario: (name, email, password)  => 
