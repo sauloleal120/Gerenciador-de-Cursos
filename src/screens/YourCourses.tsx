@@ -12,34 +12,27 @@ import {useForm, Controller} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 import {MaterialIcons} from '@expo/vector-icons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import {savedCoursesMock} from '../mocks/savedCoursesMock';
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
 
 import {useYourCourses} from '../store';
+import {useCategoryStore} from '../store';
 
 type FormData = {
   searchCourse: string;
 };
 
-export function YourCourses({route}) {
+export function YourCourses() {
+  const navigation = useNavigation();
+  const yourCourses = useYourCourses(state => state.yourCourses);
+  const categories = useCategoryStore(state => state.categories);
 
-    const {myCourses, setMyCourses} = route.params;
-    const navigation = useNavigation();
-    const yourCourses = useYourCourses(state=> state.yourCourses)
-    const {control, handleSubmit} = useForm<FormData>();
+  const {control, handleSubmit} = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
     setInput(data.searchCourse);
   };
 
   const [input, setInput] = useState('');
-
-  const [categories, setCategories] = useState([
-    {key: 1, name: '#CSS'},
-    {key: 2, name: '#UX'},
-    {key: 3, name: '#Swift'},
-    {key: 4, name: '#UI'},
-  ]);
 
 
   return (
@@ -84,7 +77,7 @@ export function YourCourses({route}) {
         />
       </View>
 
-      <ResultComponent data={myCourses} textInput={input} />
+      <ResultComponent data={yourCourses} textInput={input} />
 
       <View style={styles.coursesListContainer}>
         <FlatList
@@ -101,7 +94,7 @@ export function YourCourses({route}) {
 export function CoursesListComponent({data, textInput}) {
   const navigation = useNavigation();
 
-  if (textInput == null) {
+  if (textInput == null || textInput === '') {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -122,9 +115,7 @@ export function CoursesListComponent({data, textInput}) {
     );
   }
 
-  if (data.name.toLowerCase().includes(textInput?.toLowerCase())) {
-    // setResultCount('data.length')
-
+  if (data.name.toLowerCase().includes(textInput.toLowerCase())) {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -144,6 +135,8 @@ export function CoursesListComponent({data, textInput}) {
       </TouchableOpacity>
     );
   }
+
+  return null; // Retorna null se o curso não corresponder ao texto de entrada
 }
 
 export function ResultComponent({data, textInput}) {
@@ -151,60 +144,57 @@ export function ResultComponent({data, textInput}) {
     item.name?.toLowerCase().includes(textInput?.toLowerCase()),
   );
 
-  if (textInput !== '' && novo.length == 0) {
+  if (textInput !== '' && novo.length === 0) {
     return (
       <View style={styles.resultComponent}>
         <Text style={styles.coursesTitle}>
-          {' '}
-          {textInput == ''
+          {textInput === ''
             ? null
-            : novo.length == 1
+            : novo.length === 1
             ? novo.length + ' Result'
-            : novo.length + ' Results'}{' '}
+            : novo.length + ' Results'}
         </Text>
 
         <NoResultImage width={350} height={350} />
 
         <Text style={styles.notFoundTitle}> Course not found </Text>
         <Text style={styles.notFoundText}>
-          {' '}
           {`Try searching the course with 
-    a different keyword`}{' '}
+          a different keyword`}
         </Text>
       </View>
     );
   }
+
   if (textInput !== '' && novo.length !== 0) {
     return (
       <View style={styles.resultComponent}>
         <Text style={styles.coursesTitle}>
-          {' '}
-          {novo.length == 1
+          {novo.length === 1
             ? novo.length + ' Result'
-            : novo.length + ' Results'}{' '}
+            : novo.length + ' Results'}
         </Text>
       </View>
     );
   }
+
+  return null; // Retorna null se não houver texto de entrada
 }
 
 const styles = StyleSheet.create({
   mainContainer: {
     margin: 20,
   },
-
   greeting: {
     marginLeft: 10,
     marginTop: 20,
     fontSize: 20,
   },
-
   category: {
     fontSize: 20,
     marginTop: 10,
     marginBottom: 10,
   },
-
   categoryItems: {
     fontSize: 15,
     marginTop: 10,
@@ -214,26 +204,21 @@ const styles = StyleSheet.create({
     padding: 5,
     color: '#fff',
   },
-
   categoryContainer: {
     flexDirection: 'row',
   },
-
   nameContainer: {
     flexDirection: 'row',
   },
-
   name: {
     fontSize: 50,
     fontWeight: 'bold',
     textAlign: 'left',
   },
-
   bell: {
     marginTop: 15,
     marginLeft: 30,
   },
-
   input: {
     borderColor: 'gray',
     borderWidth: 1,
@@ -244,17 +229,14 @@ const styles = StyleSheet.create({
     fontSize: 17,
     width: '100%',
   },
-
   lupa: {
     position: 'absolute',
     marginTop: 25,
     marginLeft: '85%',
   },
-
   inputContainer: {
     flexDirection: 'row',
   },
-
   coursesCardContainer: {
     borderColor: 'gray',
     borderRadius: 15,
@@ -272,21 +254,17 @@ const styles = StyleSheet.create({
     color: '#61a496',
     marginTop: 10,
   },
-
   coursesBrief: {
     fontSize: 15,
     marginBottom: 10,
   },
-
   coursesListContainer: {
     height: 480,
   },
-
   resultComponent: {
     marginTop: 0,
     marginBottom: 0,
   },
-
   notFoundTitle: {
     justifyContent: 'center',
     textAlign: 'center',
@@ -319,7 +297,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   titleContainer: {
     justifyContent: 'center',
     alignItems: 'center',

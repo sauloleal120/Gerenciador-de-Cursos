@@ -14,8 +14,7 @@ import {useForm, Controller} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 import {coursesMock} from '../mocks/mocks';
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
-
-
+import { useCategoryStore } from '../store';
 type FormData = {
   searchCourse: string;
 };
@@ -31,12 +30,7 @@ export function CoursesScreen({route}) {
 
   const [input, setInput] = useState('');
 
-  const [categories, setCategories] = useState([
-    {key: 1, name: '#CSS'},
-    {key: 2, name: '#UX'},
-    {key: 3, name: '#Swift'},
-    {key: 4, name: '#UI'},
-  ]);
+  const categories = useCategoryStore(state=> state.categories)
 
   const [courses, setCourses] = useState(coursesMock);
 

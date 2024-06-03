@@ -6,15 +6,17 @@ import {useNavigation} from '@react-navigation/native';
 import Illustration from '../../assets/Images/Illustration.svg';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AppButton from '../shared/components/AppButton';
-import {useCursosStore} from '../store';
+import {useCursosSalvosStore} from '../store';
+import {useYourCourses} from '../store';
 
 export function CourseInfo({route}) {
   const navigation = useNavigation();
 
   const {key, name, duration, brief, about, price, from} = route.params;
-  const {savedCourses, setSavedCourses} = route.params;
-  const {myCourses, setMyCourses} = route.params;
-  const addCurso = useCursosStore(state => state.addCurso);
+
+  const addCurso = useCursosSalvosStore(state => state.addCurso);
+  const buyCourse = useYourCourses(state => state.addCurso);
+  const removeCourse = useCursosSalvosStore(state => state.removeCurso);
   return (
     <SafeAreaView style={styles.mainContainer}>
       <TouchableOpacity
@@ -65,18 +67,17 @@ export function CourseInfo({route}) {
                     about: about,
                     price: price,
                   })
-              : () =>
-                  setMyCourses(myCourses => [
-                    ...myCourses,
-                    {
-                      key: key,
-                      name: name,
-                      duration: duration,
-                      brief: brief,
-                      about: about,
-                      price: price,
-                    },
-                  ])
+              : () => {
+                  buyCourse({
+                    key: key,
+                    name: name,
+                    duration: duration,
+                    brief: brief,
+                    about: about,
+                    price: price,
+                  });
+      
+                }
           }
         />
       </View>

@@ -39,10 +39,10 @@ export function SignupScreen({route}) {
   //useEffect(()=> alert( errors?.email?.message ), [ errors?.email ])
   //useEffect(()=> alert( errors?.password?.message ), [ errors?.password ])
 
-  const onSubmit = (data: FormData) =>{
+  const onSubmit = (data: FormData) => {
     addUsuario(data?.name, data?.email, data?.password);
-    navigation.navigate('LoginScreen')
-}
+    navigation.navigate('LoginScreen');
+  };
   return (
     <SafeAreaView style={styles.mainContainer}>
       <TouchableOpacity

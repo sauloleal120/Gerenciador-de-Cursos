@@ -17,13 +17,12 @@ import {MaterialIcons} from '@expo/vector-icons';
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
 
 import {useCursosSalvosStore} from '../store';
-
+import { useCategoryStore } from '../store';
 type FormData = {
   searchCourse: string;
 };
 
 export function SavedCourses({route}) {
-  const {savedCourses, setSavedCourses} = route.params;
 
   const navigation = useNavigation();
   const {control, handleSubmit} = useForm<FormData>();
@@ -34,12 +33,7 @@ export function SavedCourses({route}) {
 
   const [input, setInput] = useState('');
 
-  const [categories, setCategories] = useState([
-    {key: 1, name: '#CSS'},
-    {key: 2, name: '#UX'},
-    {key: 3, name: '#Swift'},
-    {key: 4, name: '#UI'},
-  ]);
+  const categories = useCategoryStore(state => state.categories)
 
   const [courses, setCourses] = useState([]);
   const cursosSalvos = useCursosSalvosStore(state => state.cursosSalvos);
@@ -99,7 +93,6 @@ export function SavedCourses({route}) {
             <CoursesListComponent
               data={item}
               textInput={input}
-              setSavedCourses={setSavedCourses}
               handleDelete={()=>delCurso(item.key)}
             />
           )}
@@ -112,7 +105,6 @@ export function SavedCourses({route}) {
 export function CoursesListComponent({
   data,
   textInput,
-  setSavedCourses,
   handleDelete,
 }) {
   const navigation = useNavigation();
