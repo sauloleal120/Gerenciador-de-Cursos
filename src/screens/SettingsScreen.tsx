@@ -32,14 +32,15 @@ export function SettingsScreen({route}) {
               color="dodgerblue"
             />
             <Text style={styles.primaryText}> Notifications </Text>
-            <Switch
-              style={styles.switch}
-              trackColor={{false: '#767577', true: '#CDDCDF'}}
-              thumbColor={isEnabled ? '#3D9AD0' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
-            />
+            <View style={styles.switch}>
+              <Switch
+                trackColor={{false: '#767577', true: '#CDDCDF'}}
+                thumbColor={isEnabled ? '#3D9AD0' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
+            </View>
           </View>
 
           <View style={styles.secondaryTextContainer}>
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     position: 'absolute',
     top: 90,
+    width: '60%',
   },
 
   title: {

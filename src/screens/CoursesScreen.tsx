@@ -12,9 +12,9 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import {AntDesign} from '@expo/vector-icons';
 import {useForm, Controller} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
-import {coursesMock} from '../mocks/mocks';
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
-import { useCategoryStore } from '../store';
+import {useCategoryStore} from '../store';
+import {useCoursesStore} from '../store';
 type FormData = {
   searchCourse: string;
 };
@@ -30,9 +30,9 @@ export function CoursesScreen({route}) {
 
   const [input, setInput] = useState('');
 
-  const categories = useCategoryStore(state=> state.categories)
+  const categories = useCategoryStore(state => state.categories);
 
-  const [courses, setCourses] = useState(coursesMock);
+  const courses = useCoursesStore(state => state.coursesStore);
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -274,6 +274,7 @@ const styles = StyleSheet.create({
   coursesBrief: {
     fontSize: 15,
     marginBottom: 10,
+    marginLeft: 5,
   },
 
   coursesListContainer: {

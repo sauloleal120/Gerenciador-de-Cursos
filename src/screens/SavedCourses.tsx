@@ -17,13 +17,15 @@ import {MaterialIcons} from '@expo/vector-icons';
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
 
 import {useCursosSalvosStore} from '../store';
-import { useCategoryStore } from '../store';
+import {useCategoryStore} from '../store';
+import {useYourCourses} from '../store';
+import { YourCourses } from './YourCourses';
+
 type FormData = {
   searchCourse: string;
 };
 
 export function SavedCourses({route}) {
-
   const navigation = useNavigation();
   const {control, handleSubmit} = useForm<FormData>();
 
@@ -33,13 +35,11 @@ export function SavedCourses({route}) {
 
   const [input, setInput] = useState('');
 
-  const categories = useCategoryStore(state => state.categories)
+  const categories = useCategoryStore(state => state.categories);
 
-  const [courses, setCourses] = useState([]);
   const cursosSalvos = useCursosSalvosStore(state => state.cursosSalvos);
+  const yourCourses = useYourCourses(state => state.yourCourses)
   const delCurso = useCursosSalvosStore(state => state.removeCurso);
-
-
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -83,17 +83,16 @@ export function SavedCourses({route}) {
         />
       </View>
 
-      <ResultComponent data={courses} textInput={input} />
+      <ResultComponent data={cursosSalvos} textInput={input} />
 
       <View style={styles.coursesListContainer}>
         <FlatList
-          // extraData={savedCourses}
           data={cursosSalvos}
           renderItem={({item}) => (
             <CoursesListComponent
               data={item}
               textInput={input}
-              handleDelete={()=>delCurso(item.key)}
+              handleDelete={() => delCurso(item.key)}
             />
           )}
         />
@@ -102,14 +101,16 @@ export function SavedCourses({route}) {
   );
 }
 
-export function CoursesListComponent({
-  data,
-  textInput,
-  handleDelete,
-}) {
+export function CoursesListComponent({data, textInput, handleDelete}) {
+
+  const yourCourses = useYourCourses(state => state.yourCourses);
   const navigation = useNavigation();
 
-  if (textInput == 'a') {
+  function itemExists(array: any[], key: string) {
+    return array.some(item => item.name === key);
+  }
+
+  if (textInput === null) {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -126,8 +127,7 @@ export function CoursesListComponent({
           <Text style={styles.coursesDuration}> {data.duration} </Text>
           <Text style={styles.coursesTitle}> {data.name} </Text>
           <Text style={styles.coursesBrief}> {data.brief} </Text>
-          <TouchableOpacity
-            onPress={() => handleDelete }>
+          <TouchableOpacity onPress={() => handleDelete}>
             <MaterialCommunityIcons
               name="trash-can-outline"
               size={24}
@@ -140,8 +140,6 @@ export function CoursesListComponent({
   }
 
   if (data.name.toLowerCase().includes(textInput?.toLowerCase())) {
-    // setResultCount('data.length')
-
     return (
       <View style={styles.wrapCoursesCardContainer}>
         <TouchableOpacity
@@ -155,14 +153,17 @@ export function CoursesListComponent({
               from: 'savedCourses',
             });
           }}>
-          <View style={styles.coursesCardContainer}>
+          <View style={ itemExists(yourCourses, data.name) ? styles.coursesCardContainer2: styles.coursesCardContainer}>
             <Text style={styles.coursesDuration}> {data.duration} </Text>
             <Text style={styles.coursesTitle}> {data.name} </Text>
-            <Text style={styles.coursesBrief}> {data.name} </Text>
+            <Text style={styles.coursesBrief}>
+              {' '}
+              {itemExists(yourCourses, data.name)
+                ? 'Item comprado'
+                : data.brief}{' '}
+            </Text>
           </View>
         </TouchableOpacity>
-
-        {/* função delete ainda não está 100%, funciona mas é preciso sair e voltar na tela para ver o resultado */}
 
         <TouchableOpacity onPress={handleDelete}>
           <MaterialCommunityIcons
@@ -291,6 +292,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 10,
     height: 100,
+    width: 300,
+    justifyContent: 'center',
+    padding: 10,
+  },
+  coursesCardContainer2: {
+    borderColor: 'gray',
+    backgroundColor:'lightgray',
+    borderRadius: 15,
+    borderWidth: 1,
+    margin: 10,
+    height: 100,
+    width: 300,
     justifyContent: 'center',
     padding: 10,
   },
@@ -306,6 +319,7 @@ const styles = StyleSheet.create({
   coursesBrief: {
     fontSize: 15,
     marginBottom: 10,
+    marginLeft: 5,
   },
 
   coursesListContainer: {
