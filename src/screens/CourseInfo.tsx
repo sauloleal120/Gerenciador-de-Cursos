@@ -6,8 +6,8 @@ import {useNavigation} from '@react-navigation/native';
 import Illustration from '../../assets/Images/Illustration.svg';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AppButton from '../shared/components/AppButton';
-import {useCursosSalvosStore} from '../store';
-import {useYourCourses} from '../store';
+import {useCursosSalvosStore} from '../../src/Stores/CursosSalvosStore';
+import {useYourCourses} from '../../src/Stores/CursosCompradosStore';
 
 export function CourseInfo({route}) {
   const navigation = useNavigation();
@@ -16,7 +16,7 @@ export function CourseInfo({route}) {
 
   const addCurso = useCursosSalvosStore(state => state.addCurso);
   const buyCourse = useYourCourses(state => state.addCurso);
-  const removeCourse = useCursosSalvosStore(state => state.removeCurso);
+  
   return (
     <SafeAreaView style={styles.mainContainer}>
       <TouchableOpacity
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     top: 50,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 10,
   },
 
   mainContainer: {

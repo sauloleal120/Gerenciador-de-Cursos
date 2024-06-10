@@ -16,8 +16,8 @@ import {MaterialIcons} from '@expo/vector-icons';
 
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
 
-import {useCursosSalvosStore} from '../store';
-import {useCategoryStore} from '../store';
+import {useCursosSalvosStore} from '../../src/Stores/CursosSalvosStore';
+import {useCategoryStore} from '../../src/Stores/CategoryStore';
 import {useYourCourses} from '../store';
 import { YourCourses } from './YourCourses';
 

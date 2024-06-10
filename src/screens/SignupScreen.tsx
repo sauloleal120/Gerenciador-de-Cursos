@@ -12,7 +12,8 @@ import {useNavigation} from '@react-navigation/native';
 import SignupScreenImage from '../../assets/Images/SignupScreenImage.svg';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {MaterialIcons} from '@expo/vector-icons';
-import {useUsuarios} from '../store';
+import {useUsuarios} from '../../src/Stores/UsuarioStore';
+
 type FormData = {
   name: string;
   email: string;

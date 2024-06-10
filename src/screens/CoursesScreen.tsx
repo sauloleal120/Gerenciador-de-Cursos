@@ -13,8 +13,8 @@ import {AntDesign} from '@expo/vector-icons';
 import {useForm, Controller} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
-import {useCategoryStore} from '../store';
-import {useCoursesStore} from '../store';
+import {useCategoryStore} from '../../src/Stores/CategoryStore';
+import {useCoursesStore} from '../../src/Stores/CursosStore';
 type FormData = {
   searchCourse: string;
 };

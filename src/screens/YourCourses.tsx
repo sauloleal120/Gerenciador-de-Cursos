@@ -14,8 +14,8 @@ import {MaterialIcons} from '@expo/vector-icons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
 
-import {useYourCourses} from '../store';
-import {useCategoryStore} from '../store';
+import {useYourCourses} from '../../src/Stores/CursosCompradosStore';
+import {useCategoryStore} from '../../src/Stores/CategoryStore';
 
 type FormData = {
   searchCourse: string;
@@ -33,7 +33,6 @@ export function YourCourses() {
   };
 
   const [input, setInput] = useState('');
-
 
   return (
     <SafeAreaView style={styles.mainContainer}>
