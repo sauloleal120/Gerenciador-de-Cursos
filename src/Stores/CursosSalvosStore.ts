@@ -11,6 +11,7 @@ type Curso = {
   brief: string;
   about: string;
   price: number;
+  tags: string[];
 };
 
 // Store de cursos salvos
@@ -30,9 +31,10 @@ export const useCursosSalvosStore = create<CursosSalvosStore>(set => ({
       about:
         'Completed UI Design Essentials Course at Design Academy, Anytown, USA (July 2024). Proficient in UI design principles, wireframing, prototyping tools, and user-centered design. Developed practical projects focusing on creating intuitive and visually appealing interfaces',
       price: 50,
+      tags: ['#UI', '#UX'],
     },
   ],
-  addCurso: curso =>
+  addCurso: curso => 
     set(state => ({
       cursosSalvos: [
         ...state.cursosSalvos,

@@ -1,4 +1,3 @@
-
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -9,12 +8,9 @@ import {Main} from './src/screens/Main';
 import {YourCourses} from './src/screens/YourCourses';
 import {SavedCourses} from './src/screens/SavedCourses';
 
-
 const Stack = createNativeStackNavigator();
 
 function App() {
-
-
   return (
     <NavigationContainer>
       <Stack.Navigator>

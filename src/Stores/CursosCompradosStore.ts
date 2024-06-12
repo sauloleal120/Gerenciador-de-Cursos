@@ -4,7 +4,6 @@ function generateRandomKey(): number {
   return Math.floor(Math.random() * 1000000); // Gera um número aleatório entre 0 e 999999
 }
 
-
 type Curso = {
   key: number;
   name: string;
@@ -12,8 +11,8 @@ type Curso = {
   brief: string;
   about: string;
   price: number;
+  tags: string[];
 };
-
 
 // Store de seus cursos
 type YourCoursesStore = {
@@ -32,6 +31,7 @@ export const useYourCourses = create<YourCoursesStore>(set => ({
       about:
         'Completed UI Design Essentials Course at Design Academy, Anytown, USA (July 2024). Proficient in UI design principles, wireframing, prototyping tools, and user-centered design. Developed practical projects focusing on creating intuitive and visually appealing interfaces',
       price: 50,
+      tags: ['#UI', '#UX'],
     },
   ],
   addCurso: curso =>

@@ -12,11 +12,12 @@ import {useYourCourses} from '../../src/Stores/CursosCompradosStore';
 export function CourseInfo({route}) {
   const navigation = useNavigation();
 
-  const {key, name, duration, brief, about, price, from} = route.params;
+  const {key, name, duration, brief, about, price, from, tags} = route.params;
 
   const addCurso = useCursosSalvosStore(state => state.addCurso);
   const buyCourse = useYourCourses(state => state.addCurso);
-  
+  const cursosSalvos = useCursosSalvosStore(state => state.cursosSalvos);
+  const cursosComprados = useYourCourses(state => state.yourCourses);
   return (
     <SafeAreaView style={styles.mainContainer}>
       <TouchableOpacity
@@ -58,7 +59,7 @@ export function CourseInfo({route}) {
           type="a"
           onPress={
             from !== 'savedCourses'
-              ? () =>
+              ? () =>{
                   addCurso({
                     key: key,
                     name: name,
@@ -66,7 +67,10 @@ export function CourseInfo({route}) {
                     brief: brief,
                     about: about,
                     price: price,
-                  })
+                    tags: tags,
+                  });
+                  console.log('cursosSalvos: ', cursosSalvos);
+                }
               : () => {
                   buyCourse({
                     key: key,
@@ -75,8 +79,9 @@ export function CourseInfo({route}) {
                     brief: brief,
                     about: about,
                     price: price,
+                    tags: tags,
                   });
-      
+                console.log('cursosComprados: ', cursosComprados);
                 }
           }
         />

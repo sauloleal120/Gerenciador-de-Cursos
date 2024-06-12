@@ -12,7 +12,6 @@ type Usuario = {
   password: string;
 };
 
-
 // Store de usuários
 type UsuarioStore = {
   users: Usuario[];

@@ -18,9 +18,8 @@ import NoResultImage from '../../assets/Images/CourseNotFound.svg';
 
 import {useCursosSalvosStore} from '../../src/Stores/CursosSalvosStore';
 import {useCategoryStore} from '../../src/Stores/CategoryStore';
-import {useYourCourses} from '../store';
-import { YourCourses } from './YourCourses';
-
+import {useYourCourses} from '../../src/Stores/CursosCompradosStore';
+import CategoryComponent from '../shared/components/CategoryComponent';
 type FormData = {
   searchCourse: string;
 };
@@ -38,7 +37,7 @@ export function SavedCourses({route}) {
   const categories = useCategoryStore(state => state.categories);
 
   const cursosSalvos = useCursosSalvosStore(state => state.cursosSalvos);
-  const yourCourses = useYourCourses(state => state.yourCourses)
+  const yourCourses = useYourCourses(state => state.yourCourses);
   const delCurso = useCursosSalvosStore(state => state.removeCurso);
 
   return (
@@ -74,12 +73,10 @@ export function SavedCourses({route}) {
 
       <View style={styles.categoryContainer}>
         <Text style={styles.category}> Category: </Text>
-        <FlatList
+          <FlatList
           data={categories}
           horizontal={true}
-          renderItem={({item}) => (
-            <Text style={styles.categoryItems}> {item.name} </Text>
-          )}
+          renderItem={({item}) => <CategoryComponent data={item} />}
         />
       </View>
 
@@ -102,12 +99,15 @@ export function SavedCourses({route}) {
 }
 
 export function CoursesListComponent({data, textInput, handleDelete}) {
-
   const yourCourses = useYourCourses(state => state.yourCourses);
   const navigation = useNavigation();
+  const activeCategories = useCategoryStore(state => state.activeCategories);
+  const hasActiveCategory = data.tags.some(tag =>
+    activeCategories.some(category => category.name === tag),
+  );
 
-  function itemExists(array: any[], key: string) {
-    return array.some(item => item.name === key);
+  function itemExists(array: any[], name: string) {
+    return array.some(item => item.name === name);
   }
 
   if (textInput === null) {
@@ -121,6 +121,7 @@ export function CoursesListComponent({data, textInput, handleDelete}) {
             price: data.price,
             brief: data.brief,
             from: 'savedCourses',
+            tags: data.tags,
           });
         }}>
         <View style={styles.coursesCardContainer}>
@@ -139,7 +140,10 @@ export function CoursesListComponent({data, textInput, handleDelete}) {
     );
   }
 
-  if (data.name.toLowerCase().includes(textInput?.toLowerCase())) {
+  if (
+    data.name.toLowerCase().includes(textInput?.toLowerCase()) &&
+    (activeCategories.length === 0 || hasActiveCategory)
+  ) {
     return (
       <View style={styles.wrapCoursesCardContainer}>
         <TouchableOpacity
@@ -151,9 +155,15 @@ export function CoursesListComponent({data, textInput, handleDelete}) {
               price: data.price,
               brief: data.brief,
               from: 'savedCourses',
+              tags: data.tags,
             });
           }}>
-          <View style={ itemExists(yourCourses, data.name) ? styles.coursesCardContainer2: styles.coursesCardContainer}>
+          <View
+            style={
+              itemExists(yourCourses, data.name)
+                ? styles.coursesCardContainer2
+                : styles.coursesCardContainer
+            }>
             <Text style={styles.coursesDuration}> {data.duration} </Text>
             <Text style={styles.coursesTitle}> {data.name} </Text>
             <Text style={styles.coursesBrief}>
@@ -298,7 +308,7 @@ const styles = StyleSheet.create({
   },
   coursesCardContainer2: {
     borderColor: 'gray',
-    backgroundColor:'lightgray',
+    backgroundColor: 'lightgray',
     borderRadius: 15,
     borderWidth: 1,
     margin: 10,

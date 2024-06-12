@@ -15,6 +15,8 @@ import {useNavigation} from '@react-navigation/native';
 import NoResultImage from '../../assets/Images/CourseNotFound.svg';
 import {useCategoryStore} from '../../src/Stores/CategoryStore';
 import {useCoursesStore} from '../../src/Stores/CursosStore';
+import CategoryComponent from '../shared/components/CategoryComponent';
+import { tags } from 'react-native-svg/lib/typescript/xml';
 type FormData = {
   searchCourse: string;
 };
@@ -75,9 +77,7 @@ export function CoursesScreen({route}) {
         <FlatList
           data={categories}
           horizontal={true}
-          renderItem={({item}) => (
-            <Text style={styles.categoryItems}> {item.name} </Text>
-          )}
+          renderItem={({item}) => <CategoryComponent data={item} />}
         />
       </View>
 
@@ -97,6 +97,10 @@ export function CoursesScreen({route}) {
 
 export function CoursesListComponent({data, textInput}) {
   const navigation = useNavigation();
+  const activeCategories = useCategoryStore(state => state.activeCategories);
+  const hasActiveCategory = data.tags.some(tag =>
+    activeCategories.some(category => category.name === tag),
+  );
 
   if (textInput == null) {
     return (
@@ -108,6 +112,7 @@ export function CoursesListComponent({data, textInput}) {
             duration: data.duration,
             brief: data.brief,
             price: data.price,
+            tags: data.tags,
           });
         }}>
         <View style={styles.coursesCardContainer}>
@@ -119,7 +124,10 @@ export function CoursesListComponent({data, textInput}) {
     );
   }
 
-  if (data.name.toLowerCase().includes(textInput?.toLowerCase())) {
+  if (
+    data.name.toLowerCase().includes(textInput?.toLowerCase()) &&
+    (activeCategories.length === 0 || hasActiveCategory)
+  ) {
     // setResultCount('data.length')
 
     return (
@@ -132,6 +140,7 @@ export function CoursesListComponent({data, textInput}) {
             brief: data.brief,
             duration: data.duration,
             price: data.price,
+            tags: data.tags,
           });
         }}>
         <View style={styles.coursesCardContainer}>
